@@ -34,7 +34,11 @@
         "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
     "cSpell.words": [
+        "antfu",
         "churchportal",
+        "consola",
+        "datetime",
+        "persistedstate",
         "pinia",
         "vueuse"
     ],

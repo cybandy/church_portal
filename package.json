@@ -7,9 +7,10 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "postinstall": "nuxt prepare"
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "@nuxt/eslint": "^0.4.0",
@@ -17,17 +18,19 @@
     "@nuxt/ui": "^2.18.3",
     "@nuxtjs/i18n": "^8.3.3",
     "@pinia/nuxt": "^0.5.2",
-    "@prisma/nuxt": "^0.0.35",
     "@vite-pwa/nuxt": "^0.9.1",
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
+    "drizzle-orm": "^0.32.1",
     "nuxt": "^3.12.4",
     "pinia": "^2.2.0",
+    "postgres": "^3.4.4",
     "vue": "latest"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.24.1",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
+    "drizzle-kit": "^0.23.1",
     "eslint": "^9.8.0"
   }
 }

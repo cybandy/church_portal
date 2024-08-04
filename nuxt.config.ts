@@ -18,8 +18,12 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     "@nuxt/ui",
     "@vite-pwa/nuxt",
-    "@prisma/nuxt"
   ],
+  runtimeConfig: {
+    postgres: {
+      db_url: process.env.DATABASE_URL || ''
+    }
+  },
   eslint: {
     config: {
       stylistic: {
