@@ -65,6 +65,6 @@ export default defineNuxtConfig({
     format: ['webp', 'avif']
   },
   ui: {
-
+    global: true
   }
 });

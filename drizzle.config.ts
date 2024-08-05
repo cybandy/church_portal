@@ -15,5 +15,12 @@ import {defineConfig } from "drizzle-kit";
 export default defineConfig({
   dialect: 'postgresql',
   schema: './server/database/schema.ts',
-  out: './server/database/migrations'
+  out: './server/database/migrations',
+  dbCredentials: {
+    host:process.env.DB_HOST || 'localhost',
+    // port:process.env.DB_PORT || 5432,
+    password:process.env.DB_PASSWORD || 'cybandy',
+    user:process.env.DB_USER || 'postgres',
+    database:process.env.DB_NAME || 'churchportal',
+  }
 })
