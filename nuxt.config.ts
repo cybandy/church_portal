@@ -22,6 +22,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     postgres: {
       db_url: process.env.DATABASE_URL || ''
+    },
+    public: {
+      jwt: {
+        secret_key: process.env.JWT_SECRET || 'jwt_secret_key'
+      }
     }
   },
   eslint: {
@@ -33,7 +38,7 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    vueI18n:'./i18n.config.ts',
+    vueI18n: './i18n.config.ts',
     baseUrl: process.env.BASE_URL || '',
     langDir: './lang',
     // lazy:true,

@@ -4,7 +4,7 @@ export { sql, eq, and, or } from 'drizzle-orm'
 
 import * as schema from '../database/schema'
 
-export const tables = schema
+export const DBTables = schema
 
 export function postgresDatabase() {
   if (!process.env.DATABASE_URL) {

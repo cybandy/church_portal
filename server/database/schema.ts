@@ -16,9 +16,9 @@ export const ss_groupRelations = relations(ss_group, ({ many }) => ({
 
 export const members = pgTable("members", {
   id: serial("id").primaryKey(),
-  createdAt: timestamp('createdAt', {withTimezone:true}).defaultNow(),
-  username: varchar("username").unique().notNull(),
-  email: text("email").notNull(),
+  createdAt: timestamp('createdAt', { withTimezone: true }).defaultNow(),
+  password_hash: varchar('password_hash'),
+  email: text("email").unique().notNull(),
   first_name: varchar("first_name", {length:256}).notNull(),
   last_name: varchar("last_name", {length:256}).notNull(),
   address: varchar("address"),

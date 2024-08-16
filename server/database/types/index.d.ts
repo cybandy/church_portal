@@ -1,6 +1,7 @@
 import * as schema from '../../database/schema'
 
-export type User = typeof schema.members.$inferSelect
+export type Member = Omit<typeof schema.members.$inferSelect, 'password_hash'>
+export type NewMember = typeof schema.members.$inferInsert
 
 export type SSGroup = typeof schema.ss_group.$inferSelect
 
