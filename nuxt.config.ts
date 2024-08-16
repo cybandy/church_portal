@@ -2,6 +2,9 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
+  future: {
+    compatibilityVersion: 4,
+  },
   devServer: {
     port: 443,
     host: 'churchportal.local',
@@ -18,6 +21,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     "@nuxt/ui",
     "@vite-pwa/nuxt",
+    "nuxt-translation-manager"
   ],
   runtimeConfig: {
     postgres: {
@@ -40,15 +44,15 @@ export default defineNuxtConfig({
   i18n: {
     vueI18n: './i18n.config.ts',
     baseUrl: process.env.BASE_URL || '',
-    langDir: './lang',
+    langDir: './locales',
     // lazy:true,
     locales: [
       {
         code: 'en',
-        iso: 'en-GB',
-        name: 'gb',
+        iso: 'en-US',
+        name: 'us',
         files: [
-          'en/general.json'
+          "en-US.json"
         ]
       },
       {
@@ -56,12 +60,29 @@ export default defineNuxtConfig({
         iso: 'it-IT',
         name: 'it',
         files: [
-          'it/general.json'
+          'it-IT.json'
+        ]
+      },
+      {
+        code: 'fr',
+        iso: 'fr-Fr',
+        name: 'fr',
+        files: [
+          "fr-FR.json"
+        ]
+      },
+      {
+        code: 'de',
+        iso: 'de-DE',
+        name: 'de',
+        files: [
+          'de-DE.json'
         ]
       },
     ],
     defaultLocale: 'en',
   },
+
   pwa: {
 
   },
