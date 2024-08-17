@@ -41,6 +41,7 @@ export default defineNuxtConfig({
         indent: 2,
         semi: false,
       },
+      
     },
   },
   i18n: {

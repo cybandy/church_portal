@@ -17,7 +17,14 @@ export default withNuxt(
     },
     {
       // rules to apply to other files not specified above
+    },
+    {
+      plugins: [
+        'eslint-plugin-you-dont-need-lodash-underscore'
+      ]
     }
+    
   )
+  
 )
 
