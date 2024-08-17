@@ -19,7 +19,7 @@ const items = computed(() => {
     }
   })
 })
-const activeFlag = computed(() => (locales.value.filter((x => x.code == locale.value))[0].name))
+const activeFlag = computed(() => (locales.value.filter((x => x.code == locale.value))[0]?.name))
 
 
 </script>

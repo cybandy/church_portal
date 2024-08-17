@@ -4,7 +4,13 @@
 
 <template>
   <div>
-    <slot />
+    <UContainer>
+      <TemplateHeaderDesktopType1 />
+    </UContainer>
+    <div>
+      <slot />
+    </div>
+    
   </div>
 </template>
 

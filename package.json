@@ -23,12 +23,14 @@
     "@vueuse/nuxt": "^10.11.0",
     "bcrypt": "^5.1.1",
     "drizzle-orm": "^0.32.1",
+    "drizzle-zod": "^0.5.1",
     "jsonwebtoken": "^9.0.2",
     "nuxt": "^3.12.4",
     "nuxt-translation-manager": "^1.1.1",
     "pinia": "^2.2.0",
     "postgres": "^3.4.4",
-    "vue": "latest"
+    "vue": "latest",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.24.1",
@@ -37,6 +39,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/jsonwebtoken": "^9.0.6",
     "drizzle-kit": "^0.23.1",
-    "eslint": "^9.8.0"
+    "eslint": "^9.8.0",
+    "nuxt-lodash": "^2.5.3"
   }
 }

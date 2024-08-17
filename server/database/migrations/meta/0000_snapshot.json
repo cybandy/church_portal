@@ -1,5 +1,5 @@
 {
-  "id": "14e00220-9bc0-4c31-918c-7c0304e92b6b",
+  "id": "1795e612-f6fc-4d56-a038-587ee9e13f62",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -45,6 +45,67 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "public.event_officials": {
+      "name": "event_officials",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rank": {
+          "name": "rank",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "member_id": {
+          "name": "member_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "event_id": {
+          "name": "event_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "event_officials_member_id_members_id_fk": {
+          "name": "event_officials_member_id_members_id_fk",
+          "tableFrom": "event_officials",
+          "tableTo": "members",
+          "columnsFrom": [
+            "member_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "public.events": {
       "name": "events",
       "schema": "",
@@ -62,9 +123,21 @@
           "notNull": false,
           "default": "now()"
         },
-        "datetime": {
-          "name": "datetime",
-          "type": "timestamp with time zone",
+        "date": {
+          "name": "date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "from": {
+          "name": "from",
+          "type": "time with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "to": {
+          "name": "to",
+          "type": "time with time zone",
           "primaryKey": false,
           "notNull": false
         },
@@ -78,6 +151,60 @@
         "location": {
           "name": "location",
           "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.hymn": {
+      "name": "hymn",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "number": {
+          "name": "number",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "language": {
+          "name": "language",
+          "type": "hymnLanguagesEnum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "author": {
+          "name": "author",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "mp3": {
+          "name": "mp3",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         }
@@ -104,11 +231,11 @@
           "notNull": false,
           "default": "now()"
         },
-        "username": {
-          "name": "username",
+        "password_hash": {
+          "name": "password_hash",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "email": {
           "name": "email",
@@ -146,10 +273,9 @@
           "primaryKey": false,
           "notNull": false
         },
-        "role": {
-          "name": "role",
-          "type": "role",
-          "typeSchema": "public",
+        "roles": {
+          "name": "roles",
+          "type": "role[]",
           "primaryKey": false,
           "notNull": false
         },
@@ -164,11 +290,11 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "members_username_unique": {
-          "name": "members_username_unique",
+        "members_email_unique": {
+          "name": "members_email_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "username"
+            "email"
           ]
         }
       }
@@ -209,6 +335,47 @@
           ]
         }
       }
+    },
+    "public.stanza": {
+      "name": "stanza",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "number": {
+          "name": "number",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verse": {
+          "name": "verse",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hymn_id": {
+          "name": "hymn_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_refrain": {
+          "name": "is_refrain",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
     }
   },
   "enums": {
@@ -218,6 +385,17 @@
       "values": [
         "church",
         "sabbath_school_service"
+      ]
+    },
+    "public.hymnLanguagesEnum": {
+      "name": "hymnLanguagesEnum",
+      "schema": "public",
+      "values": [
+        "twi",
+        "en-US",
+        "fr-FR",
+        "it-IT",
+        "de-DE"
       ]
     },
     "public.role": {
@@ -230,7 +408,9 @@
         "secretary",
         "elder",
         "deacon",
-        "chorister"
+        "chorister",
+        "communication_department",
+        "admin"
       ]
     }
   },

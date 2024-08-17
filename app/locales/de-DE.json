@@ -1,7 +1,15 @@
 {
-  "dragndroptext": "Bilder/Pdf hier ablegen",
-  "goodbye": "Auf Wiedersehen",
+  "email": "e-mail",
+  "events": "veranstaltungen",
+  "first_name": "nachname",
+  "gallery": "galerie",
   "hello": "Hallo",
-  "select_file": "Datei auswählen",
-  "thanks": "Danke"
+  "home": "startseite",
+  "hymn": "hymne",
+  "last_name": "vorname",
+  "login": "anmeldung",
+  "login_desc": "Willkommen zurück",
+  "password": "kennwort",
+  "register": "registrieren",
+  "registration_desc": "Ich freue mich, dass Sie bei uns sind."
 }

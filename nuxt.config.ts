@@ -21,7 +21,9 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     "@nuxt/ui",
     "@vite-pwa/nuxt",
-    "nuxt-translation-manager"
+    "nuxt-translation-manager",
+    '@pinia-plugin-persistedstate/nuxt',
+    'nuxt-lodash',
   ],
   runtimeConfig: {
     postgres: {
@@ -82,7 +84,14 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'en',
   },
-
+  icon: {
+    customCollections: [
+      {
+        prefix: 'qb-logo',
+        dir: './app/assets/logos'
+      }
+    ]
+  },
   pwa: {
 
   },
@@ -92,5 +101,8 @@ export default defineNuxtConfig({
   },
   ui: {
     global: true
+  },
+  lodash: {
+    prefix: '_'
   }
 });

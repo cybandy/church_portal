@@ -1,7 +1,15 @@
 {
-  "dragndroptext": "drop your images/pdf here",
-  "goodbye": "Goodbye",
+  "email": "e-mail",
+  "events": "events",
+  "first_name": "first name",
+  "gallery": "gallery",
   "hello": "Hello",
-  "select_file": "Select file",
-  "thanks": "Thanks"
+  "home": "home",
+  "hymn": "hymn",
+  "last_name": "last name",
+  "login": "login",
+  "login_desc": "welcome back",
+  "password": "password",
+  "register": "register",
+  "registration_desc": "glad to join have you join us."
 }

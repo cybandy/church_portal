@@ -2,8 +2,16 @@ import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
 import type { NewMember } from '../database/types'
 import type { H3Event } from 'h3'
+import { z } from 'zod'
 
 type newMemberData = { password: string } & Omit<NewMember, 'id' | 'createdAt' | 'password_hash'>
+
+export const createUserSchema = z.object({
+  first_name: z.string().min(2),
+  last_name: z.string().min(2),
+  email: z.string().email(),
+  password: z.string().min(8)
+})
 
 
 export async function useCreateMember(data:newMemberData, event:H3Event) {
@@ -21,11 +29,12 @@ export async function useCreateMember(data:newMemberData, event:H3Event) {
     .values([{...data, password_hash: hashPwd}])
     .returning({
       id: DBTables.members.id,
+      email: DBTables.members.email
     }).catch((error) => {
       throw createError(error)
     })
   
-  return generateToken(member[0].id, data.password, event)
+  return generateToken(member[0].id, member[0].email, event)
 }
 
 export async function useLogin(event:H3Event, email: string, password: string) {
@@ -42,12 +51,12 @@ export async function useLogin(event:H3Event, email: string, password: string) {
     }
   })
 
-  if (!member) throw createError('Invalid email or password')
+  if (!member) throw createError('Invalid email')
   if (!member.password_hash) throw createError('Invalid email or password')
   
-  const isPwdValid = await bcrypt.compare(member.password_hash, password)
+  const isPwdValid = await bcrypt.compare(password, member.password_hash)
 
-  if (!isPwdValid) throw createError('Invalid email or password')
+  if (!isPwdValid) throw createError('incorrect password')
   
   return generateToken(member.id, email, event)
 }
@@ -60,15 +69,44 @@ function generateToken(id: string|number, email: string, event:H3Event) {
   return token
 }
 
-export function isAuthenticated(event: H3Event) {
-  const cookies = parseCookies(event)
-  const token = cookies['qb_token']
+export function isAuthenticated(event: H3Event, token='') {
+  
   if (!token) return false
   const config = useRuntimeConfig(event)
   try {
-    jsonwebtoken.verify(token, config.public.jwt.secret_key)
-    return true
+    const user = jsonwebtoken.verify(token, config.public.jwt.secret_key)
+    return {
+      status: true,
+      data: user,
+      error: null
+    }
   } catch (error) {
-    return false
+    return {
+      status: false,
+      error: error,
+      data:null
+    }
   }
+}
+
+export async function useGetUser(event: H3Event, email:string) {
+  const db = useDrizzle()
+  let member = await db.query.members.findFirst({
+    where(fields, operators) {
+      return operators.eq(fields.email, email)
+    },
+    columns: {
+      id: true,
+      first_name: true,
+      last_name: true,
+      email: true,
+      address: true,
+      avatar_url: true,
+      tel: true,
+      roles: true,
+      createdAt: true,
+      ss_group_id:true
+    }
+  })
+  return member
 }

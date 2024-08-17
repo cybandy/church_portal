@@ -1,7 +1,15 @@
 {
-  "dragndroptext": "lasciate qui le immagini/pdf",
-  "goodbye": "Arrivederci",
+  "email": "e-mail",
+  "events": "eventi",
+  "first_name": "nome",
+  "gallery": "galleria",
   "hello": "Ciao",
-  "select_file": "Selezionare un file",
-  "thanks": "Grazie"
+  "home": "casa",
+  "hymn": "inno",
+  "last_name": "cognome",
+  "login": "login",
+  "login_desc": "bentornato",
+  "password": "password",
+  "register": "registro",
+  "registration_desc": "Sono lieto di unirmi a voi."
 }
