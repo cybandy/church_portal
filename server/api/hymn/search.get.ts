@@ -1,7 +1,8 @@
 import { sql } from 'drizzle-orm'
 import { z } from 'zod'
+import _ from 'es-toolkit'
 const queryParams = z.object({
-  q: z.string().min(1)
+  q: z.string().default('')
 })
 export default defineEventHandler(async (event) => {
   const {q} = await getValidatedQuery(event, queryParams.parse)
@@ -10,16 +11,6 @@ export default defineEventHandler(async (event) => {
   
 
   const res = await db.transaction(async (tx) => {
-    // return await tx.query.hymn.findMany({
-    //   where(fields, operators) {
-    //     return operators.or(
-    //       operators.ilike(fields.title, query.q),
-    //       // operators.ilike(fields.author, query.q),
-    //       operators.ilike(fields.number, query.q),
-    //       operators.inArray(fields.author, query.q.split(''))
-    //     )
-    //   },
-    // })
     const formatted_search_query = q.split(' ').join(' & ')
     const results = await tx
   .select()
@@ -28,8 +19,9 @@ export default defineEventHandler(async (event) => {
     return results
   })
 
+  const groups = _.groupBy(res, x=>x.number as string)
+
   return {
-    hymns: res,
-    count: res.length
+    hymns: groups, count: Object.keys(groups).length
   }
 })

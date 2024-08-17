@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     "@vite-pwa/nuxt",
     "nuxt-translation-manager",
     '@pinia-plugin-persistedstate/nuxt',
-    'nuxt-lodash',
+   
   ],
   runtimeConfig: {
     postgres: {
@@ -103,7 +103,5 @@ export default defineNuxtConfig({
   ui: {
     global: true
   },
-  lodash: {
-    prefix: '_'
-  }
+ 
 });

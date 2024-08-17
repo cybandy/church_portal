@@ -20,7 +20,6 @@ export default withNuxt(
     },
     {
       plugins: [
-        'eslint-plugin-you-dont-need-lodash-underscore'
       ]
     }
     

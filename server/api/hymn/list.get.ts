@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { eq, inArray } from 'drizzle-orm'
-import _ from 'lodash-es'
+import _ from 'es-toolkit'
 
 const queryParams = z.object({
   number: z.string().default(''),
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     })
     return query
   })
-  const groups = _.groupBy(res, (x)=>x.number)
+  const groups = _.groupBy(res, (x)=>x.number as string)
   return {
     hymns: groups,
     count: Object.keys(groups).length
