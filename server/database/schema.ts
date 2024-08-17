@@ -1,5 +1,5 @@
 // schema.ts
-import { pgEnum, pgTable, serial, text, varchar, timestamp, integer, date, time, boolean, customType } from "drizzle-orm/pg-core";
+import { pgEnum, pgTable, serial, text, varchar, timestamp, integer, date, time, boolean, customType, index } from "drizzle-orm/pg-core";
 import { relations, sql, SQL } from "drizzle-orm";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
@@ -137,12 +137,15 @@ export const hymn = pgTable('hymn', {
   author: varchar('author'),
   mp3: varchar('mp3'),
   title: varchar('title'),
-  // hymnSearch: tsVector("hymnSearch", {
-  //   dimensions:3,
-  // }).generatedAlwaysAs(
-  //   (): SQL =>sql`to_tsvector('english', ${hymn.title})`
-  // )
+  hymnSearch: tsVector("hymnSearch", {
+    dimensions:3,
+  }).generatedAlwaysAs(
+    (): SQL =>sql`to_tsvector('english', COALESCE(${hymn.number}, '') || ' ' || COALESCE(${hymn.title}, '') || ' ' || COALESCE(${hymn.author}, ''))`
+  )
+}, (t) => ({
+  idx: index('idx_hymn_search').using("gin", t.hymnSearch)
 })
+)
 
 export const insertSchemaHymn = createInsertSchema(hymn)
 export const selectSchemaHymn = createSelectSchema(hymn)
