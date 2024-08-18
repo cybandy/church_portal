@@ -15,6 +15,13 @@
       "when": 1723903538642,
       "tag": "0001_thankful_black_tom",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1723972230728,
+      "tag": "0002_salty_gideon",
+      "breakpoints": true
     }
   ]
 }

@@ -132,11 +132,11 @@ export const hymnLanguagesEnum = pgEnum('hymnLanguagesEnum', [
 export const hymn = pgTable('hymn', {
   id: serial("id").primaryKey(),
   createdAt: timestamp('createdAt', { withTimezone: true }).defaultNow(),
-  number: varchar('number', { length: 10 }),
+  number: varchar('number', { length: 10 }).notNull(),
   language: hymnLanguagesEnum('language'),
   author: varchar('author'),
   mp3: varchar('mp3'),
-  title: varchar('title'),
+  title: varchar('title').notNull(),
   hymnSearch: tsVector("hymnSearch", {
     dimensions:3,
   }).generatedAlwaysAs(
