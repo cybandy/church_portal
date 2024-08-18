@@ -38,6 +38,7 @@
         "churchportal",
         "consola",
         "datetime",
+        "ilike",
         "persistedstate",
         "pinia",
         "vueuse"

@@ -1,5 +1,6 @@
 import { z } from 'zod'
-import { HymnNew, StanzaNew } from "../database/types";
+import type { HymnNew, StanzaNew, Hymn } from "../database/types";
+import {groupBy} from 'es-toolkit'
 
 // export type createHymnBodySchema = Array<
 //   HymnNew & StanzaNew
@@ -69,4 +70,25 @@ export async function useGetHymn(id: number) {
     }
   })
   return hymn
+}
+
+// const HymnGroups = groupBy<string, Hymn>
+/**
+ * Generator of the results
+ * @param hymns array of hymn
+ * @param key string => properties or key of objects in the array
+ */
+export function* parseHymnIterator(hymns:Hymn[], key:keyof Hymn) {
+  const groups = groupBy(hymns, (x) => x[key])
+  for (const group of Object.values(groups)) {
+    const langs = group.map(x => x.language)
+    const res_ = {
+        number: group[0].number,
+        title: group[0].title,
+        author: group[0].author,
+        language: langs,
+        mp3: group[0].mp3
+      }
+      yield res_
+  }
 }

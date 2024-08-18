@@ -9,7 +9,8 @@ export type SSGroup = typeof schema.ss_group.$inferSelect
 
 export type Role = typeof schema.roleEnum.enumValues
 
-export type Hymn = typeof schema.hymn.$inferSelect
-export type Stanza = z.infer<typeof schema.selectSchemaHymn>
+// export type Hymn = typeof schema.hymn.$inferSelect
+export type Hymn = z.infer<typeof schema.selectSchemaHymn>
 export type StanzaNew = z.infer<typeof schema.insertStanzaSchema>
 export type HymnNew = z.infer<typeof schema.insertSchemaHymn>
+export type HymnLang = typeof schema.hymnLanguagesEnum.enumValues

@@ -1,22 +1,31 @@
 <script lang="ts" setup>
-const q = ref('')
+import type { Hymn } from '~~/server/database/types';
+import type { UiHymnResponse } from '~/types';
+
+// api - custom $fetch
 const { $api } = useNuxtApp()
-const d = ref({})
-const { data, pending, error, refresh} = await useAsyncData(async () => {
-  const dd =  $api('/api/hymn/search', {
+
+// search query
+const q = ref('')
+
+const hymnals = ref([] as UiHymnResponse[])
+
+// search function
+const searchFunc = async () => {
+
+  const { hymns } = await $fetch('/api/hymn/search', {
     method: 'GET',
     query: {
       q: q.value
-    },
-    
+    }
   })
-  return dd
-}, { watch: [q], pick: ['hymns'], immediate: false })
-
-const { hymns } = await $api('/api/hymn/list')
-if (hymns) {
-  d.value = hymns
+  if (hymns) {
+    hymnals.value = hymns as any
+  }
+  
 }
+
+await searchFunc()
 </script>
 
 <template>
@@ -42,9 +51,12 @@ if (hymns) {
 
         <div>
           
-          <div class="flex items-center">
+          <div 
+          v-for="hymn of hymnals"
+          :key="hymn.number as string"
+          class="flex items-center p-2">
             <span class="">
-
+              {{  }}
             </span>
             <p>
 
