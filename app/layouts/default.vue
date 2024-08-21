@@ -5,7 +5,7 @@
 <template>
   <div>
     <UContainer>
-      <TemplateHeaderDesktopType1 />
+      <TemplateHeaderV1 />
     </UContainer>
     <div>
       <slot />
