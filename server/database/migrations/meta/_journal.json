@@ -22,6 +22,20 @@
       "when": 1723972230728,
       "tag": "0002_salty_gideon",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1723993524561,
+      "tag": "0003_rich_silver_fox",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1724021407585,
+      "tag": "0004_slim_jack_power",
+      "breakpoints": true
     }
   ]
 }

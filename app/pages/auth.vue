@@ -44,10 +44,10 @@ const card_ui = {
             </template>
 
             <UFormGroup :label="$t('email')" name="email" class="mb-3">
-              <UInput v-model="loginForm.email" placeholder="john.doe@example.com" required />
+              <UInput v-model="loginForm.email" placeholder="john.doe@example.com" autocomplete="email" required />
             </UFormGroup>
             <UFormGroup :label="$t('password')" name="password">
-              <UInput v-model="loginForm.password" type="password" placeholder="********" required />
+              <UInput v-model="loginForm.password" type="password" placeholder="********" autocomplete="current-password" required />
             </UFormGroup>
 
             <template #footer>
@@ -79,11 +79,11 @@ const card_ui = {
             </div>
 
             <UFormGroup :label="$t('email')" name="email" required>
-              <UInput v-model="RegistrationForm.email" required />
+              <UInput v-model="RegistrationForm.email" autocomplete="email" required />
             </UFormGroup>
 
             <UFormGroup :label="$t('password')" name="password" required>
-              <UInput v-model="RegistrationForm.password" type="password" required />
+              <UInput v-model="RegistrationForm.password" autocomplete="current-password" type="password" required />
             </UFormGroup>
 
 

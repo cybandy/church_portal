@@ -39,6 +39,8 @@
         "consola",
         "datetime",
         "ilike",
+        "musicfyplayer",
+        "Noto",
         "persistedstate",
         "pinia",
         "vueuse"

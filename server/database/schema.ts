@@ -110,10 +110,10 @@ export const eventRelations = relations(events, ({ many }) => ({
 
 export const stanza = pgTable('stanza', {
   id: serial("id").primaryKey(),
-  number: integer('number'),
-  verse: varchar('verse'),
-  hymn_id: integer('hymn_id'),
-  is_refrain: boolean('is_refrain').default(false)
+  number: integer('number').notNull(),
+  verse: varchar('verse').notNull(),
+  hymn_id: integer('hymn_id').notNull(),
+  is_refrain: boolean('is_refrain').default(false).notNull()
 })
 
 export const stanzaRelations = relations(stanza, ({ one }) => ({

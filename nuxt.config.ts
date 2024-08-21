@@ -13,6 +13,9 @@ export default defineNuxtConfig({
       cert: './ssl/churchportal.local.pem'
     }
   },
+  css: [
+    '~~/app/assets/css/main.css'
+  ],
   modules: [
     '@vueuse/nuxt',
     '@pinia/nuxt',
@@ -23,7 +26,10 @@ export default defineNuxtConfig({
     "@vite-pwa/nuxt",
     "nuxt-translation-manager",
     '@pinia-plugin-persistedstate/nuxt',
-   
+    "@nuxt/scripts",
+    "@nuxt/fonts",
+    "@nuxtjs/seo",
+    '@nuxtjs/device',
   ],
   runtimeConfig: {
     postgres: {
@@ -45,7 +51,7 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    vueI18n: './i18n.config.ts',
+    // vueI18n: './i18n.config.ts',
     baseUrl: process.env.BASE_URL || '',
     langDir: './locales',
     // lazy:true,
@@ -56,7 +62,8 @@ export default defineNuxtConfig({
         name: 'us',
         files: [
           "en-US.json"
-        ]
+        ],
+        domain: `https://en.${process.env.I18N_DOMAIN}`
       },
       {
         code: 'it',
@@ -64,7 +71,8 @@ export default defineNuxtConfig({
         name: 'it',
         files: [
           'it-IT.json'
-        ]
+        ],
+        domain: `https://it.${process.env.I18N_DOMAIN}`
       },
       {
         code: 'fr',
@@ -72,7 +80,8 @@ export default defineNuxtConfig({
         name: 'fr',
         files: [
           "fr-FR.json"
-        ]
+        ],
+        domain: `https://fr.${process.env.I18N_DOMAIN}`
       },
       {
         code: 'de',
@@ -80,10 +89,12 @@ export default defineNuxtConfig({
         name: 'de',
         files: [
           'de-DE.json'
-        ]
+        ],
+        domain: `https://de.${process.env.I18N_DOMAIN}`
       },
     ],
     defaultLocale: 'en',
+    differentDomains:false
   },
   icon: {
     customCollections: [

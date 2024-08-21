@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
         return operators.and(
           // operators.eq(fields.language, 'twi'),
           (
-            number.length > 0 ? operators.inArray(fields.number, number.split('')) : operators.gte(fields.id, 1)
+            number.length > 0 ? operators.inArray(fields.number, number.split(',')) : operators.gte(fields.id, 1)
           )
         )
       },

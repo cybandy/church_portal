@@ -1,0 +1,1 @@
+ALTER TABLE "stanza" ALTER COLUMN "number" SET NOT NULL;

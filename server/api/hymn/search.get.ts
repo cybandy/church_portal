@@ -12,7 +12,8 @@ export default defineEventHandler(async (event) => {
   
 
   const res = await db.transaction(async (tx) => {
-    const formatted_search_query = q.split(' ').join(' & ')
+    
+    const formatted_search_query = q.trim().split(' ').join(' & ')
     const results = await tx
   .select()
   .from(DBTables.hymn)

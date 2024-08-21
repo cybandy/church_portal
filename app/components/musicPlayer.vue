@@ -1,8 +1,16 @@
 <script lang="ts" setup>
+const props = defineProps({
+  url: {
+    type: String,
+    required: true
+  },
+  label: String
+})
+const url = computed(() => props.url)
 
 const audioPlayer = ref<HTMLAudioElement>()
 const { playing, currentTime, duration, volume, muted, waiting, ended } = useMediaControls(audioPlayer, {
-  src: "https://www.hymnalaccompanist.com/mp3/3.mp3"
+  src: url.value
 })
 
 function playPauseAudio() {
@@ -17,21 +25,17 @@ function formatDuration(seconds: number) {
 </script>
 
 <template>
-  <div>
-    <p>{{ $t('hello') }}</p>
-    <MiscLanguageSwitcher />
+  <div class="flex w-fit">
+    <UPopover>
+    <UIcon name="i-heroicons-musical-note" class="w-6 h-6 cursor-pointer" :popper="{ placement: 'top-end' }" />
 
-    <UContainer>
-      <FullScreen />
-      <MusicPlayer url="https://www.hymnalaccompanist.com/mp3/3.mp3" />
-      <!-- <div class="space-y-1">
-        <audio ref="audioPlayer" controls src="https://www.hymnalaccompanist.com/mp3/3.mp3" />
-        <div class="p-4 bg-gray-200 dark:bg-gray-800 max-w-80 rounded-xl ring-1 ring-gray-100 dark:ring-gray-800 ring-inset space-y-3">
+    <template #panel>
+      <div class="p-4 bg-gray-200 dark:bg-gray-800 min-w-64 max-w-80 rounded-xl ring-1 ring-gray-100 dark:ring-gray-800 ring-inset space-y-3">
           <div class="space-y-1">
             <UProgress size="md" :value="currentTime" :max="duration" />
             <div class="flex items-center justify-end">
-              <span>
-                {{ waiting ? '--/--' : `${formatDuration(currentTime)}/${formatDuration(duration)}` }}
+              <span class="text-xs/6 text-gray-600 dark:text-gray-300">
+                {{ waiting ? '-- / --' : `${formatDuration(currentTime)} / ${formatDuration(duration)}` }}
               </span>
             </div>
           </div>
@@ -40,12 +44,12 @@ function formatDuration(seconds: number) {
             <UButton size="xs" color="white" @click="playPauseAudio" icon="i-heroicons-play-20-solid" />
             <UButton size="xs" color="white" @click="playPauseAudio" icon="i-heroicons-pause-20-solid" />
           </div>
-          <UButton size="xs" color="white" @click="mutedAudio" :icon=" muted ? 'i-heroicons-speaker-wave-20-solid' : 'i-heroicons-speaker-x-mark-20-solid'" />
+          <UButton size="xs" color="white" @click="mutedAudio" :icon="! muted ? 'i-heroicons-speaker-wave-20-solid' : 'i-heroicons-speaker-x-mark-20-solid'" />
           </div>
         </div>
-        {{ formatDuration(currentTime) }} : {{ formatDuration(duration) }}
-      </div> -->
-    </UContainer>
+    </template>
+  </UPopover>
+  <audio ref="audioPlayer" />
   </div>
 </template>
 

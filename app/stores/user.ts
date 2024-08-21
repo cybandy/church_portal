@@ -46,6 +46,7 @@ export const useUserStore = defineStore({
     },
 
     async getUser() {
+      if(this.userToken.length == 0) return
       const { $api } = useNuxtApp()
       const d = await $api('/api/user')
       if (d) {
