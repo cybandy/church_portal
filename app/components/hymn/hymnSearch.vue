@@ -32,7 +32,7 @@ watch(q, async () => {
 
 <template>
   <div>
-    <UIcon class="w-6 h-6 cursor-pointer" name="i-heroicons-magnifying-glass" @click="isOpen = true" />
+    <UIcon class="header-icons cursor-pointer" name="i-heroicons-magnifying-glass" @click="isOpen = true" />
 
     <UModal v-model="isOpen">
       <HymnListing v-model:q="q" v-model:hymnals="hymnals" @search="searchFunc" />

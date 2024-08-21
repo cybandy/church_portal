@@ -1,5 +1,5 @@
 export default defineNuxtPlugin((nuxtApp) => {
-  const isMobile = () => {
+  const isMobile = computed(() => {
     if (import.meta.server) {
       return useDevice().isMobileOrTablet
     }
@@ -7,7 +7,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       const { width } = useWindowSize()
       return width.value < 640
     }
-  }
+  })
 
   return {
     provide: {

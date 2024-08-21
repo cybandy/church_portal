@@ -4,10 +4,10 @@ const { $isMobile } = useNuxtApp()
 
 <template>
   <div>
-    <div v-if="$isMobile()">
+    <div v-if="$isMobile">
       <TemplateHeaderMobileType1 />
     </div>
-    <div v-else-if="!$isMobile()">
+    <div v-else-if="!$isMobile">
       <TemplateHeaderDesktopType1 />
     </div>
 

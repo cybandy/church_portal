@@ -13,7 +13,7 @@ const hymnStore = useHymnStore()
 const { selected_languages, languages } = storeToRefs(hymnStore)
 const all_languages = computed(() => {
   const availHymnLanguage = data.value?.data.map(x => x.language as string)
-  const sel_langs = availHymnLanguage?.filter(x => languages.value.includes(x as any))
+  const sel_langs = availHymnLanguage?.filter(x => languages.value.includes(x as any)) as string[]
   return [sel_langs?.map(x=>{return {label:x}})]
 })
 
@@ -23,6 +23,16 @@ const mp3_url = computed(() => {
 
 const fullScreenEl = ref<HTMLElement | null>(null)
 const { isFullscreen, enter, exit, toggle } = useFullscreen(fullScreenEl)
+
+const isMobile = useNuxtApp().$isMobile
+
+watch(isMobile, () => {
+  if (selected_languages.value.length > 0) {
+    if (isMobile.value) {
+      selected_languages.value = [selected_languages.value[0] as string]
+    }
+  }
+})
 
 
 // seo
@@ -39,8 +49,8 @@ useHead({
 
     <div v-else>
       <UContainer>
-        <div class="py-5 sm:py-7 md:py-8 lg:py-10 grid grid-cols-3 items-center ">
-          <div>
+        <div class="py-5 sm:py-7 md:py-8 lg:py-10 grid lg:grid-cols-3 gap-6 items-center ">
+          <div class="hidden lg:block">
 
           </div>
           <div class="flex items-center text-center">
@@ -48,19 +58,19 @@ useHead({
               {{ number }} - {{ data?.data[0]?.title }}
             </h1>
           </div>
-          <div class="flex items-center justify-end gap-3">
+          <div class="flex items-center justify-center lg:justify-end gap-3">
             <UDropdown :items="all_languages" :popper="{placement:'bottom-start'}" :ui="{item:{label:'first-letter:uppercase'}}">
-              <UIcon name="i-heroicons-language" class="w-6 h-6 cursor-pointer" />
+              <UIcon name="i-heroicons-language" class="header-icons cursor-pointer" />
             </UDropdown>
             <HymnSearch />
             <MusicPlayer v-if="typeof mp3_url == 'string'" :url="mp3_url" />
-            <UIcon @click="toggle" dynamic name="material-symbols:fullscreen" class="w-6 h-6 cursor-pointer" />
+            <UIcon @click="toggle" dynamic name="material-symbols:fullscreen" class="header-icons cursor-pointer" />
           </div>
         </div>
       </UContainer>
 
       <UContainer>
-        <HymnNumberView ref="fullScreenEl" :hymns="data.data" :is-full-screen="isFullscreen" />
+        <HymnNumberView ref="fullScreenEl" :hymns="(data.data as any)" :is-full-screen="isFullscreen" />
 
       </UContainer>
     </div>

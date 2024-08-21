@@ -27,7 +27,7 @@ function formatDuration(seconds: number) {
 <template>
   <div class="flex w-fit">
     <UPopover>
-    <UIcon name="i-heroicons-musical-note" class="w-6 h-6 cursor-pointer" :popper="{ placement: 'top-end' }" />
+    <UIcon name="i-heroicons-musical-note" class="header-icons cursor-pointer" :popper="{ placement: 'top-end' }" />
 
     <template #panel>
       <div class="p-4 bg-gray-200 dark:bg-gray-800 min-w-64 max-w-80 rounded-xl ring-1 ring-gray-100 dark:ring-gray-800 ring-inset space-y-3">

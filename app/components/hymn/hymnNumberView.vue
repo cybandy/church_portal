@@ -92,13 +92,14 @@ const isMouseMoving = ref(true)
       </div>
     </template>
     <template v-else>
-      <div class="grid gap-5" :class="[hymns.length == 2 && 'grid-cols-2']">
+      <div class="grid gap-5" :class="[hymns.length == 2 && 'md:grid-cols-2']">
         <div v-for="(hymn, i) of hymns" class="flex flex-col justify-start items-center" :key="i">
           <div class="w-fit grid gap-8 md:gap-10">
             <div v-for="(stanza, j) of hymn.stanzas" :key="j" class="w-full space-y-1 text-sm sm:text-base">
               <span class="font-bold text-black dark:text-white">{{ stanza.number + 1 }}</span>
               <div :class="[stanza.is_refrain && 'italic']" class="text-gray-800 dark:text-gray-200 leading-loose">
-                <p v-for="line of stanza.verse.split('\n')" :class="[
+                <p v-for="line of stanza.verse.split('\n')" 
+                :class="[
                   ['nnyeso', 'refrain'].includes(line.toLocaleLowerCase()) ? 'font-semibold text-primary' : ''
                 ]">
                   {{ line }}

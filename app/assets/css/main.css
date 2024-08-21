@@ -6,4 +6,7 @@
   body {
     @apply bg-white dark:bg-gray-950 text-black dark:text-white text-sm font-sans
   }
+  .header-icons {
+    @apply w-4 h-4 sm:w-6 sm:h-6;
+  }
 }

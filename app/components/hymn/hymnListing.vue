@@ -84,7 +84,7 @@ watch(q, async () => {
                       {{ $t('author') }}
                     </span>
                   </UButton>
-                  <UButton color="gray" variant="ghost" :label="hymn.author" />
+                  <UButton v-if="hymn.author" color="gray" variant="ghost" :label="hymn.author" />
                 </UButtonGroup>
 
                 <UButtonGroup size="xs" orientation="horizontal">
