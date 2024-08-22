@@ -41,6 +41,7 @@
     "@faker-js/faker": "^8.4.1",
     "@iconify-json/ic": "^1.1.18",
     "@iconify-json/material-symbols": "^1.1.88",
+    "@iconify-json/ph": "^1.1.14",
     "@nuxtjs/device": "^3.1.1",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
     "@types/bcrypt": "^5.0.2",

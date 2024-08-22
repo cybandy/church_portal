@@ -47,7 +47,7 @@ export default defineNuxtConfig({
         indent: 2,
         semi: false,
       },
-      
+
     },
   },
   i18n: {
@@ -94,7 +94,7 @@ export default defineNuxtConfig({
       },
     ],
     defaultLocale: 'en',
-    differentDomains:false
+    differentDomains: false
   },
   icon: {
     customCollections: [
@@ -114,5 +114,5 @@ export default defineNuxtConfig({
   ui: {
     global: true
   },
- 
+
 });

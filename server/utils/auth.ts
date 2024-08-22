@@ -3,6 +3,7 @@ import jsonwebtoken from 'jsonwebtoken'
 import type { NewMember } from '../database/types'
 import type { H3Event } from 'h3'
 import { z } from 'zod'
+import crypto from 'crypto'
 
 type newMemberData = { password: string } & Omit<NewMember, 'id' | 'createdAt' | 'password_hash'>
 
@@ -61,9 +62,14 @@ export async function useLogin(event:H3Event, email: string, password: string) {
   return generateToken(member.id, email, event)
 }
 
+function generateJTI() {
+  return crypto.randomBytes(16).toString('hex')
+}
+
 function generateToken(id: string|number, email: string, event:H3Event) {
   const { secret_key } = useRuntimeConfig().public.jwt
-  const token = jsonwebtoken.sign({ id, email }, secret_key)
+  const jti = generateJTI()
+  const token = jsonwebtoken.sign({ id, email, jti }, secret_key, {expiresIn: '7d'})
   // set cookie
   setCookie(event, 'qb_token', token)
   return token
@@ -109,4 +115,13 @@ export async function useGetUser(event: H3Event, email:string) {
     }
   })
   return member
+}
+
+export async function useLogout(jti: string, exp:number) {
+  
+  const expiration = new Date(exp * 1000)
+  //save in db
+  const db = useDrizzle()
+  await db.insert(DBTables.blackListedTokens).values({ jti, expiration })
+  return
 }

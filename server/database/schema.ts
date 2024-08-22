@@ -55,9 +55,9 @@ const insertMemberSchema = createInsertSchema(members, {
 export const attendance = pgTable("attendance", {
   id: serial("id").primaryKey(),
   createdAt: timestamp('createdAt', { withTimezone: true }).defaultNow(),
-  datetime: timestamp('datetime', { withTimezone: true }),
-  member_id: integer('member_id'),
-  event_id: integer('event_id')
+  datetime: timestamp('datetime', { withTimezone: true }).notNull(),
+  member_id: integer('member_id').notNull(),
+  event_id: integer('event_id').notNull()
 })
 
 export const attendanceRelations = relations(attendance, ({ one }) => ({
@@ -78,10 +78,10 @@ export const eventEnum = pgEnum('event_type', [
 export const eventOfficials = pgTable('event_officials', {
   id: serial("id").primaryKey(),
   createdAt: timestamp('createdAt', { withTimezone: true }).defaultNow(),
-  title: varchar('title'),
-  rank: integer('rank'),
-  member_id: integer('member_id').references(()=>members.id),
-  event_id: integer('event_id')
+  title: varchar('title').notNull(),
+  rank: integer('rank').notNull(),
+  member_id: integer('member_id').references(()=>members.id).notNull(),
+  event_id: integer('event_id').notNull()
 })
 
 export const eventOfficialsRelations = relations(eventOfficials, ({ one, many }) => ({
@@ -95,9 +95,9 @@ export const events = pgTable('events', {
   id: serial("id").primaryKey(),
   createdAt: timestamp('createdAt', { withTimezone: true }).defaultNow(),
   // date: timestamp('date', { withTimezone: true }),
-  date: date('date', { mode: 'string' }),
-  from: time('from', { withTimezone: true }),
-  to: time('to', { withTimezone: true }),
+  date: date('date', { mode: 'string' }).notNull(),
+  from: time('from', { withTimezone: true }).notNull(),
+  to: time('to', { withTimezone: true }).notNull(),
   event_type: eventEnum('event_type').$default(() => 'church'),
   location: varchar('location', { length: 256 }),
 
@@ -126,15 +126,16 @@ export const stanzaRelations = relations(stanza, ({ one }) => ({
 export const insertStanzaSchema = createInsertSchema(stanza)
 
 export const hymnLanguagesEnum = pgEnum('hymnLanguagesEnum', [
-  'twi', 'en-US', 'fr-FR', 'it-IT', 'de-DE'
+  'twi', 'eng', 'french', 'italian'
 ])
 
 export const hymn = pgTable('hymn', {
   id: serial("id").primaryKey(),
   createdAt: timestamp('createdAt', { withTimezone: true }).defaultNow(),
   number: varchar('number', { length: 10 }).notNull(),
-  language: hymnLanguagesEnum('language'),
+  language: hymnLanguagesEnum('language').notNull().default('eng'),
   author: varchar('author'),
+  type: varchar('type', { length: 10 }).default('num').notNull(),
   mp3: varchar('mp3'),
   title: varchar('title').notNull(),
   hymnSearch: tsVector("hymnSearch", {
@@ -154,3 +155,9 @@ export const selectSchemaHymn = createSelectSchema(hymn)
 export const hymnRelations = relations(hymn, ({ many }) => ({
   stanzas: many(stanza)
 }))
+
+export const blackListedTokens = pgTable('blackListedTokens', {
+  id: serial('id').primaryKey(),
+  jti: varchar('jti').notNull().unique(),
+  expiration: timestamp('expiration').notNull()
+})

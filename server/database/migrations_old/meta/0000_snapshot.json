@@ -1,5 +1,5 @@
 {
-  "id": "eb92383b-e99a-4d22-982a-aa4f35ddddfe",
+  "id": "1795e612-f6fc-4d56-a038-587ee9e13f62",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -25,61 +25,25 @@
           "name": "datetime",
           "type": "timestamp with time zone",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "member_id": {
           "name": "member_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "event_id": {
           "name": "event_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
-    },
-    "public.blackListedTokens": {
-      "name": "blackListedTokens",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "jti": {
-          "name": "jti",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "expiration": {
-          "name": "expiration",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "blackListedTokens_jti_unique": {
-          "name": "blackListedTokens_jti_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "jti"
-          ]
-        }
-      }
     },
     "public.event_officials": {
       "name": "event_officials",
@@ -102,25 +66,25 @@
           "name": "title",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "rank": {
           "name": "rank",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "member_id": {
           "name": "member_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "event_id": {
           "name": "event_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         }
       },
       "indexes": {},
@@ -163,19 +127,19 @@
           "name": "date",
           "type": "date",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "from": {
           "name": "from",
           "type": "time with time zone",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "to": {
           "name": "to",
           "type": "time with time zone",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "event_type": {
           "name": "event_type",
@@ -217,28 +181,20 @@
           "name": "number",
           "type": "varchar(10)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "language": {
           "name": "language",
           "type": "hymnLanguagesEnum",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true,
-          "default": "'eng'"
+          "notNull": false
         },
         "author": {
           "name": "author",
           "type": "varchar",
           "primaryKey": false,
           "notNull": false
-        },
-        "type": {
-          "name": "type",
-          "type": "varchar(10)",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'num'"
         },
         "mp3": {
           "name": "mp3",
@@ -250,36 +206,10 @@
           "name": "title",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
-        },
-        "hymnSearch": {
-          "name": "hymnSearch",
-          "type": "tsvector",
-          "primaryKey": false,
-          "notNull": false,
-          "generated": {
-            "as": "to_tsvector('english', COALESCE(\"hymn\".\"number\", '') || ' ' || COALESCE(\"hymn\".\"title\", '') || ' ' || COALESCE(\"hymn\".\"author\", ''))",
-            "type": "stored"
-          }
+          "notNull": false
         }
       },
-      "indexes": {
-        "idx_hymn_search": {
-          "name": "idx_hymn_search",
-          "columns": [
-            {
-              "expression": "hymnSearch",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "gin",
-          "with": {}
-        }
-      },
+      "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
@@ -420,25 +350,25 @@
           "name": "number",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "verse": {
           "name": "verse",
           "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "hymn_id": {
           "name": "hymn_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "is_refrain": {
           "name": "is_refrain",
           "type": "boolean",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": false
         }
       },
@@ -462,9 +392,10 @@
       "schema": "public",
       "values": [
         "twi",
-        "eng",
-        "french",
-        "italian"
+        "en-US",
+        "fr-FR",
+        "it-IT",
+        "de-DE"
       ]
     },
     "public.role": {

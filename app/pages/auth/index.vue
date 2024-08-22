@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const items = [{
   slot: 'login',
   label: t('login')
@@ -26,12 +26,20 @@ const card_ui = {
     base:'space-y-5'
   }
 }
+
+const route = useRoute()
+const router = useRouter()
+const localRoute = useLocaleRoute()
+const setI18nParams = useSetI18nParams()
+
+const { tab } = storeToRefs(useUserStore())
+
 </script>
 
 <template>
   <UContainer class="grid place-content-center pt-[60px]">
     <div class="min-w-full sm:min-w-[500px] md:min-w-[550px] max-w-full sm:max-w-[550px]">
-      <UTabs :items="items" class="w-full">
+      <UTabs :items="items" v-model="tab" class="w-full">
         <template #login="{ item }">
           <UCard @submit.prevent="loginFunc" :ui="card_ui">
             <template #header>
@@ -46,9 +54,10 @@ const card_ui = {
             <UFormGroup :label="$t('email')" name="email" class="mb-3">
               <UInput v-model="loginForm.email" placeholder="john.doe@example.com" autocomplete="email" required />
             </UFormGroup>
-            <UFormGroup :label="$t('password')" name="password">
+            <FormsInputPassword :label="$t('password')" v-model="loginForm.password" required />
+            <!-- <UFormGroup :label="$t('password')" name="password">
               <UInput v-model="loginForm.password" type="password" placeholder="********" autocomplete="current-password" required />
-            </UFormGroup>
+            </UFormGroup> -->
 
             <template #footer>
               <UButton type="submit" color="primary">
@@ -82,9 +91,11 @@ const card_ui = {
               <UInput v-model="RegistrationForm.email" autocomplete="email" required />
             </UFormGroup>
 
-            <UFormGroup :label="$t('password')" name="password" required>
+            <!-- <UFormGroup :label="$t('password')" name="password" required>
               <UInput v-model="RegistrationForm.password" autocomplete="current-password" type="password" required />
-            </UFormGroup>
+            </UFormGroup> -->
+
+            <FormsInputPassword v-model="RegistrationForm.password" :label="$t('password')" required />
 
 
             <template #footer>

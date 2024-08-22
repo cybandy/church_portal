@@ -6,5 +6,18 @@ import { createUserSchema } from '~~/server/utils/auth'
  */
 export default defineEventHandler(async (event) => {
   const body = await readValidatedBody(event, createUserSchema.parse)
-  return await useCreateMember(body, event)
+  try {
+    const token = await useCreateMember(body, event)
+    return token
+  } catch (error) {
+    if (JSON.stringify(error).includes('duplicate key value violates')) {
+      throw createError({
+        message: `${body.email} is already registered`
+      })
+    }
+
+    throw createError({
+      statusCode: 500,
+    })
+  }
 })
