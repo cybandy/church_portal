@@ -9,6 +9,7 @@ const props = defineProps({
   },
   isFullScreen: Boolean
 })
+
 const is_full_screen = computed(() => props.isFullScreen)
 
 const stanzaNumber = ref(0)
@@ -58,7 +59,7 @@ const isMouseMoving = ref(true)
 </script>
 
 <template>
-  <div>
+  <div class="h-full">
     <template v-if="is_full_screen">
       <div ref="mouseEl" class="w-full h-full">
         <h1 class="text-xl md:text-2xl font-semibold w-full text-center pt-10">

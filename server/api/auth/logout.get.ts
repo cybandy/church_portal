@@ -1,4 +1,6 @@
 export default defineEventHandler(async (event) => {
   const data = event.context.user
-  return data
+  await useLogout(data.jti, data.exp)
+  event.headers.set('Authorization', '')
+  return
 })

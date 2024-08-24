@@ -5,7 +5,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
     else {
       const { width } = useWindowSize()
-      return width.value < 640
+      return width.value < 640 || useDevice().isMobileOrTablet
     }
   })
 

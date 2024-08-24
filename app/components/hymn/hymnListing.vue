@@ -10,7 +10,7 @@ const props = defineProps({
   }
 })
 const emits = defineEmits([
-  'update:q', 'update:hymnals', 'search',
+  'update:q', 'update:hymnals', 'search', 'scroll'
 ])
 
 // search query
@@ -37,11 +37,20 @@ watch(q, async () => {
   await searchFunc()
 })
 
+const scrollContainer = ref<HTMLElement | null>(null)
+const {  } = useInfiniteScroll(
+  scrollContainer,
+  () => {
+    console.log('scrolling...')
+    emits('scroll')
+  },
+  {distance: 10}
+)
 </script>
 
 <template>
-    <div class="min-w-full sm:min-w-[500px] md:min-w-[650px] max-w-full sm:max-w-[550px] md:max-w-[650px]">
-      <UCard>
+    <div class="min-w-full sm:min-w-[500px] md:min-w-[650px] max-w-full sm:max-w-[550px] md:max-w-[650px] h-full">
+      <UCard class="h-full" :ui="{body:{base:'h-full'}}">
         <template #header>
           <div>
 
@@ -56,11 +65,11 @@ watch(q, async () => {
           </UInput>
         </template>
 
-        <div class="space-y-5">
+        <div ref="scrollContainer" class="space-y-5 h-full overflow-y-scroll no-scrollbar">
 
-          <div v-for="hymn of hymnals.slice(0, 10)" :key="(hymn.number as string)" class="ring-1 ring-gray-200 dark:ring-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 sm:p-4 rounded-lg">
+          <div v-for="hymn of hymnals" :key="(hymn.number as string)" class="ring-1 ring-gray-200 dark:ring-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 sm:p-4 rounded-lg">
 
-            <div class="grid grid-cols-[54px_minmax(0,1fr)] grid-rows-2 gap-y-2 gap-x-1">
+            <div class="grid grid-cols-[54px_minmax(0,1fr)] grid-rows-[32px_minmax] gap-y-2 gap-x-1">
               <div class="flex items-center">
                 <UButton variant="ghost" color="gray" :label="hymn.number" />
               </div>
@@ -69,7 +78,7 @@ watch(q, async () => {
                   {{ hymn.title }}
                 </ULink>
               </div>
-              <div class="col-start-2 flex items-center gap-5">
+              <div class="col-start-2 flex flex-wrap items-center gap-5">
                 <UButtonGroup size="xs" orientation="horizontal">
                   <UButton variant="ghost" color="gray" icon="i-heroicons-play" >
                     <span class="first-letter:capitalize">
@@ -78,8 +87,8 @@ watch(q, async () => {
                   </UButton>
                 </UButtonGroup>
 
-                <UButtonGroup size="xs" orientation="horizontal">
-                  <UButton color="gray" variant="ghost" >
+                <UButtonGroup size="xs" orientation="horizontal" class="order-last md:order-none">
+                  <UButton class="hidden md:inline-block" color="gray" variant="ghost" >
                     <span class="first-letter:capitalize">
                       {{ $t('author') }}
                     </span>

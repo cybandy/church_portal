@@ -3,11 +3,11 @@
 </script>
 
 <template>
-  <div>
+  <div class="w-screen h-screen">
     <UContainer>
       <TemplateHeaderV1 />
     </UContainer>
-    <div>
+    <div class="h-full">
       <slot />
     </div>
     

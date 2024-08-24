@@ -37,7 +37,7 @@ const logosName = computed(() => {
   }
   
 })
-const { user, isLoggedIn } = storeToRefs(useUserStore())
+
 </script>
 
 <template>
@@ -55,10 +55,7 @@ const { user, isLoggedIn } = storeToRefs(useUserStore())
       <MiscLanguageSwitcher />
       <MiscDarkMode />
       <UIcon name="i-heroicons-bell" class="w-6 h-6" />
-      <div>
-        <UAvatar v-if="isLoggedIn" size="sm" :src="user.avatar_url || ''" :alt="`${user.first_name} ${user.last_name}`" />
-        <ULink v-else :to="useI18nLink('/auth')" ><UIcon name="i-heroicons-user-circle" class="w-6 h-6" /></ULink>
-      </div>
+      <ProfileHeaderMenu />
       
     </div>
   </div>

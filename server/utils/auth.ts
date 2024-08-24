@@ -15,32 +15,32 @@ export const createUserSchema = z.object({
 })
 
 
-export async function useCreateMember(data:newMemberData, event:H3Event) {
-  
+export async function useCreateMember(data: newMemberData, event: H3Event) {
+
   if (!data.email || !data.password) {
     throw createError('Email and password are required')
   }
   const salt = await bcrypt.genSalt(10)
   const hashPwd = await bcrypt.hash(data.password, salt)
-  
+
   const db = useDrizzle()
 
   const member = await db
     .insert(DBTables.members)
-    .values([{...data, password_hash: hashPwd}])
+    .values([{ ...data, password_hash: hashPwd }])
     .returning({
       id: DBTables.members.id,
       email: DBTables.members.email
     }).catch((error) => {
       throw createError(error)
     })
-  
+
   return generateToken(member[0].id, member[0].email, event)
 }
 
-export async function useLogin(event:H3Event, email: string, password: string) {
+export async function useLogin(event: H3Event, email: string, password: string) {
   if (!email || !password) throw createError('Email and password are required')
-  
+
   const db = useDrizzle()
   let member = await db.query.members.findFirst({
     where(fields, operators) {
@@ -48,17 +48,17 @@ export async function useLogin(event:H3Event, email: string, password: string) {
     },
     columns: {
       password_hash: true,
-      id:true
+      id: true
     }
   })
 
   if (!member) throw createError('Invalid email')
   if (!member.password_hash) throw createError('Invalid email or password')
-  
+
   const isPwdValid = await bcrypt.compare(password, member.password_hash)
 
   if (!isPwdValid) throw createError('incorrect password')
-  
+
   return generateToken(member.id, email, event)
 }
 
@@ -66,17 +66,17 @@ function generateJTI() {
   return crypto.randomBytes(16).toString('hex')
 }
 
-function generateToken(id: string|number, email: string, event:H3Event) {
+function generateToken(id: string | number, email: string, event: H3Event) {
   const { secret_key } = useRuntimeConfig().public.jwt
   const jti = generateJTI()
-  const token = jsonwebtoken.sign({ id, email, jti }, secret_key, {expiresIn: '7d'})
-  // set cookie
-  setCookie(event, 'qb_token', token)
+  const token = jsonwebtoken.sign({ id, email, jti }, secret_key, { expiresIn: '7d' })
+  // set headers
+  event.headers.set('Authorization', `Bearer ${token}`)
   return token
 }
 
-export function isAuthenticated(event: H3Event, token='') {
-  
+export function isAuthenticated(event: H3Event, token = '') {
+
   if (!token) return false
   const config = useRuntimeConfig(event)
   try {
@@ -90,12 +90,12 @@ export function isAuthenticated(event: H3Event, token='') {
     return {
       status: false,
       error: error,
-      data:null
+      data: null
     }
   }
 }
 
-export async function useGetUser(event: H3Event, email:string) {
+export async function useGetUser(event: H3Event, email: string) {
   const db = useDrizzle()
   let member = await db.query.members.findFirst({
     where(fields, operators) {
@@ -111,17 +111,33 @@ export async function useGetUser(event: H3Event, email:string) {
       tel: true,
       roles: true,
       createdAt: true,
-      ss_group_id:true
+      ss_group_id: true
     }
   })
   return member
 }
 
-export async function useLogout(jti: string, exp:number) {
-  
+export async function useLogout(jti: string, exp: number) {
+
   const expiration = new Date(exp * 1000)
   //save in db
   const db = useDrizzle()
-  await db.insert(DBTables.blackListedTokens).values({ jti, expiration })
+  await db.insert(DBTables.blackListedTokens).values({ jti, expiration }).onConflictDoNothing({ target: DBTables.blackListedTokens.jti })
   return
+}
+
+export async function isJwtBlacklisted(event: H3Event, jti: string) {
+  const isBlackListed = await useDrizzle().query.blackListedTokens.findFirst({
+    where(fields, operators) {
+      return operators.eq(fields.jti, jti)
+    },
+  })
+
+  if (isBlackListed) {
+    console.log('sending redirect')
+    event.headers.set('Authorization', '')
+    throw createError({
+      statusCode: 401
+    })
+  }
 }

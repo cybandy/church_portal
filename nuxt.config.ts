@@ -114,5 +114,13 @@ export default defineNuxtConfig({
   ui: {
     global: true
   },
+  nitro: {
+    experimental: {
+      tasks: true
+    },
+    scheduledTasks: {
+      '12 0 * * *': ['db:deleted_jwt']
+    }
+  }
 
 });

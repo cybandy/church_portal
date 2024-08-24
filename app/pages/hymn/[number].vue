@@ -70,7 +70,11 @@ useHead({
       </UContainer>
 
       <UContainer>
-        <HymnNumberView ref="fullScreenEl" :hymns="(data.data as any)" :is-full-screen="isFullscreen" />
+        <div ref="fullScreenEl" class="relative">
+          <UButton v-show="isFullscreen" @click="toggle" icon="i-heroicons-x-mark-20-solid" color="gray" class="absolute top-1 right-3" />
+          <HymnNumberView  :hymns="(data.data as any)" :is-full-screen="isFullscreen" />
+        </div>
+        
 
       </UContainer>
     </div>

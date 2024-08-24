@@ -10,7 +10,6 @@ const favicon = computed(() => {
   }
   
 })
-const { user, isLoggedIn } = storeToRefs(useUserStore())
 </script>
 
 <template>
@@ -19,12 +18,10 @@ const { user, isLoggedIn } = storeToRefs(useUserStore())
       <UIcon :name="favicon" class="w-[33.38px] h-[30px]" />
     </NuxtLinkLocale>
     <div class="flex items-center gap-2">
+      <MiscDarkMode />
       <UIcon name="i-heroicons-bell" class="w-6 h-6 cursor-pointer" />
       <div>
-        <div>
-        <UAvatar v-if="isLoggedIn" size="sm" :src="user.avatar_url || ''" :alt="`${user.first_name} ${user.last_name}`" />
-        <NuxtLinkLocale v-else to="/auth" ><UIcon name="i-heroicons-user-circle" class="w-6 h-6" /></NuxtLinkLocale>
-      </div>
+       <ProfileHeaderMenu />
       </div>
     </div>
   </div>
