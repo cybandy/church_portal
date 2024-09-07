@@ -61,19 +61,19 @@ const isMouseMoving = ref(true)
 <template>
   <div class="h-full">
     <template v-if="is_full_screen">
-      <div ref="mouseEl" class="w-full h-full">
-        <h1 class="text-xl md:text-2xl font-semibold w-full text-center pt-10">
+      <div ref="mouseEl" class="w-full h-full bg-white dark:bg-gray-950">
+        <h1 class="text-xl md:text-3xl lg:text-4xl font-semibold w-full text-center pt-10">
               {{ hymns[0]?.number }} - {{ hymns[0]?.title }}
             </h1>
         <template v-for="(_stanza, ind) of stanzas" :key="ind">
-          <UContainer v-if="ind == stanzaNumber" class="relative h-full w-full flex items-center">
-            <div class="w-full grid gap-5" :class="[hymns.length == 2 && 'grid-cols-2']">
-              <div v-for="(stanza, j) of _stanza" :key="j" class="w-full flex flex-col items-center justify-center text-base sm:text-lg md:text-xl">
+          <UContainer v-if="ind == stanzaNumber" class="relative w-screen h-screen flex items-center">
+            <div class="w-full h-full grid gap-5" :class="[hymns.length == 2 && 'grid-cols-2']">
+              <div v-for="(stanza, j) of _stanza" :key="j" class="w-full flex flex-col items-center justify-start pt-14 text-base sm:text-lg md:text-xl lg:text-3xl text-pretty">
                 <div class="w-fit space-y-1">
                   <span class="font-bold text-black dark:text-white inline-block w-full">{{ stanza.number + 1 }}</span>
-                <div :class="[stanza.is_refrain && 'italic']" class="text-gray-800 dark:text-gray-200 leading-loose">
+                <div :class="[stanza.is_refrain && 'italic']" class="text-gray-800 dark:text-gray-200 leading-loose space-y-1">
                   <p v-for="line of stanza.verse.split('\n')" 
-                  class="text-start"
+                  class="text-start font-bold"
                   :class="[
                     ['nnyeso', 'refrain'].includes(line.toLocaleLowerCase()) ? 'font-semibold text-primary' : ''
                   ]">

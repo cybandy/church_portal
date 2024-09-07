@@ -9,8 +9,19 @@ const { $api } = useNuxtApp()
 const q = ref('')
 
 const hymn_ind = ref(0)
-const hymn_hymn = ref([] as UiHymnResponse[][])
+// const hymn_hymn = ref([] as UiHymnResponse[][])
 const hymnals = ref([] as UiHymnResponse[])
+
+const limit = ref(30)
+const offset = ref(0)
+const count = ref(0)
+
+const queryParams = computed(() => {
+  return {
+    limit: limit.value,
+  offset: offset.value * limit.value
+  }
+})
 
 // search function
 const searchFunc = async () => {
@@ -21,13 +32,13 @@ const searchFunc = async () => {
   const { hymns } = await $fetch('/api/hymn/search', {
     method: 'GET',
     query: {
-      q: q.value
+      q: q.value,
+      ...queryParams.value
     }
   })
   hymn_ind.value = 0
   if (hymns) {
-    hymn_hymn.value = chunk(hymns, 10) as any
-    hymnals.value = hymn_hymn.value[0] as any
+    hymnals.value.push(...hymns as any)
   }
 
 }
@@ -35,25 +46,36 @@ const searchFunc = async () => {
 // list function
 const listHymnFunc = async () => {
   hymn_ind.value = 0
-  const { hymns } = await $fetch('/api/hymn/list')
+  const { hymns, count: _count } = await $fetch('/api/hymn/list', {
+    query: {
+      ...queryParams.value
+    }
+  })
   if (hymns) {
-    hymn_hymn.value = chunk(hymns, 10) as any
-    hymnals.value = hymn_hymn.value[0] as any
+    hymnals.value.push(...hymns as any)
+    count.value = _count
   }
 }
 
+const loadMore = computed(() => {
+  return queryParams.value.offset < count.value
+})
+
+
 // scrolling
 const scrollDown = () => {
-  if(hymn_ind.value == hymn_hymn.value.length) return
-  hymn_ind.value++
-  hymnals.value.push(...hymn_hymn.value[hymn_ind.value] as any)
+  offset.value++
 }
 
 await listHymnFunc()
 
-watch(q, async () => {
-  await searchFunc()
+watch(hymnals, async () => {
+  console.log(loadMore.value)
 })
+
+await useAsyncData('list_search', async () => { 
+  await searchFunc()
+}, {watch:[q,queryParams,], immediate:false})
 
 
 //ui
@@ -62,7 +84,7 @@ const button_ui = {font:'first-letter:capitalize'}
 
 <template>
   <UContainer class="flex items-center justify-center pt-[60px] h-full">
-    <HymnListing @scroll="scrollDown" v-model:q="q" v-model:hymnals="hymnals" @search="searchFunc" />
+    <HymnListing @scroll="scrollDown" v-model:q="q" v-model:hymnals="hymnals" @search="searchFunc" :count="count" :load-more="loadMore" />
   </UContainer>
 </template>
 

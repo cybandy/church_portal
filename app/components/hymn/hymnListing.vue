@@ -7,10 +7,12 @@ const props = defineProps({
   hymnals: {
     type: Array<UiHymnResponse>,
     default:[]
-  }
+  },
+  count: Number,
+  loadMore:Boolean
 })
 const emits = defineEmits([
-  'update:q', 'update:hymnals', 'search', 'scroll'
+  'update:q', 'update:hymnals', 'search', 'scroll', 'update:count'
 ])
 
 // search query
@@ -18,11 +20,17 @@ const q = computed({
   get: () => props.q,
   set: (val) => emits('update:q', val)
 })
+const count = computed({
+  get: () => props.count,
+  set: (val) => emits('update:count', val)
+})
 
 const hymnals = computed({
   get: () => props.hymnals,
   set:(val)=>emits('update:hymnals',val)
 })
+
+const loadMore = computed(()=>props.loadMore)
 
 // search function
 const searchFunc = async () => {
@@ -41,10 +49,17 @@ const scrollContainer = ref<HTMLElement | null>(null)
 const {  } = useInfiniteScroll(
   scrollContainer,
   () => {
-    console.log('scrolling...')
+    // console.log('scrolling...')
     emits('scroll')
   },
-  {distance: 10}
+  {
+    distance: 10,
+    // canLoadMore:
+    canLoadMore(el) {
+      const _hymn = hymnals.value.flatMap(x => Object.values(x))
+      return loadMore.value
+    },
+  }
 )
 </script>
 
