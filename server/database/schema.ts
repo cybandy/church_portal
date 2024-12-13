@@ -48,7 +48,7 @@ export const membersRelations = relations(members, ({ one, many }) => ({
 
 const insertMemberSchema = createInsertSchema(members, {
   email: (schema) => schema.email.email(),
-  
+
 })
 
 
@@ -80,7 +80,7 @@ export const eventOfficials = pgTable('event_officials', {
   createdAt: timestamp('createdAt', { withTimezone: true }).defaultNow(),
   title: varchar('title').notNull(),
   rank: integer('rank').notNull(),
-  member_id: integer('member_id').references(()=>members.id).notNull(),
+  member_id: integer('member_id').references(() => members.id).notNull(),
   event_id: integer('event_id').notNull()
 })
 
@@ -139,9 +139,9 @@ export const hymn = pgTable('hymn', {
   mp3: varchar('mp3'),
   title: varchar('title').notNull(),
   hymnSearch: tsVector("hymnSearch", {
-    dimensions:3,
+    dimensions: 3,
   }).generatedAlwaysAs(
-    (): SQL =>sql`to_tsvector('english', COALESCE(${hymn.number}, '') || ' ' || COALESCE(${hymn.title}, '') || ' ' || COALESCE(${hymn.author}, ''))`
+    (): SQL => sql`to_tsvector('english', COALESCE(${hymn.number}, '') || ' ' || COALESCE(${hymn.title}, '') || ' ' || COALESCE(${hymn.author}, ''))`
   )
 }, (t) => ({
   idx: index('idx_hymn_search').using("gin", t.hymnSearch)

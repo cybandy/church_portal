@@ -19,8 +19,17 @@ const count = ref(0)
 const queryParams = computed(() => {
   return {
     limit: limit.value,
-  offset: offset.value * limit.value
+    offset: offset.value * limit.value
   }
+})
+
+await useAsyncData('hymnals_fetch', async () => { 
+  if (!q.value || q.value == '') {
+    await listHymnFunc()
+    return
+  }
+}, {
+  watch:[q,queryParams]
 })
 
 // search function
@@ -38,7 +47,7 @@ const searchFunc = async () => {
   })
   hymn_ind.value = 0
   if (hymns) {
-    hymnals.value.push(...hymns as any)
+    hymnals.value = hymns as any
   }
 
 }
@@ -53,7 +62,7 @@ const listHymnFunc = async () => {
   })
   if (hymns) {
     hymnals.value.push(...hymns as any)
-    count.value = _count
+    count.value = Number(_count)
   }
 }
 
@@ -69,22 +78,15 @@ const scrollDown = () => {
 
 await listHymnFunc()
 
-watch(hymnals, async () => {
-  console.log(loadMore.value)
-})
-
-await useAsyncData('list_search', async () => { 
-  await searchFunc()
-}, {watch:[q,queryParams,], immediate:false})
-
 
 //ui
-const button_ui = {font:'first-letter:capitalize'}
+const button_ui = { font: 'first-letter:capitalize' }
 </script>
 
 <template>
   <UContainer class="flex items-center justify-center pt-[60px] h-full">
-    <HymnListing @scroll="scrollDown" v-model:q="q" v-model:hymnals="hymnals" @search="searchFunc" :count="count" :load-more="loadMore" />
+    <HymnListing @scroll="scrollDown" v-model:q="q" v-model:hymnals="hymnals" @search="searchFunc" :count="count"
+      :load-more="loadMore" />
   </UContainer>
 </template>
 

@@ -29,7 +29,7 @@
     "drizzle-zod": "^0.5.1",
     "es-toolkit": "^1.16.0",
     "jsonwebtoken": "^9.0.2",
-    "nuxt": "^3.12.4",
+    "nuxt": "^3.13.1",
     "nuxt-translation-manager": "^1.1.1",
     "pinia": "^2.2.0",
     "postgres": "^3.4.4",

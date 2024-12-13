@@ -53,7 +53,7 @@ const {  } = useInfiniteScroll(
     emits('scroll')
   },
   {
-    distance: 10,
+    distance: 50,
     // canLoadMore:
     canLoadMore(el) {
       const _hymn = hymnals.value.flatMap(x => Object.values(x))

@@ -59,6 +59,7 @@ export default defineNuxtConfig({
       {
         code: 'en',
         iso: 'en-US',
+        language: 'en-US',
         name: 'us',
         files: [
           "en-US.json"
@@ -68,6 +69,7 @@ export default defineNuxtConfig({
       {
         code: 'it',
         iso: 'it-IT',
+        language: 'it-IT',
         name: 'it',
         files: [
           'it-IT.json'
@@ -77,6 +79,7 @@ export default defineNuxtConfig({
       {
         code: 'fr',
         iso: 'fr-Fr',
+        language: 'fr-Fr',
         name: 'fr',
         files: [
           "fr-FR.json"
@@ -86,6 +89,7 @@ export default defineNuxtConfig({
       {
         code: 'de',
         iso: 'de-DE',
+        language: 'de-DE',
         name: 'de',
         files: [
           'de-DE.json'

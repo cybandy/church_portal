@@ -1,4 +1,4 @@
-import { isJwtBlacklisted } from "../utils/auth"
+
 
 export default defineEventHandler(async (event) => {
   const authorization = event.headers.get('Authorization')

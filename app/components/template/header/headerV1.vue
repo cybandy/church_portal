@@ -7,20 +7,20 @@ const { width, height } = useElementSize(header_el)
 
 <template>
   <div ref="header_el">
-    <!-- <ClientOnly> -->
-      <div v-if="device.isMobile">
+    <ClientOnly>
+      <div v-if="$isMobile">
       <TemplateHeaderMobileType1 />
     </div>
     <div v-else>
       <TemplateHeaderDesktopType1 />
     </div>
 
-    <!-- <template #fallback>
+    <template #fallback>
       <div class="h-[80px]">
 
       </div>
     </template>
-    </ClientOnly> -->
+    </ClientOnly>
 
   </div>
 </template>
