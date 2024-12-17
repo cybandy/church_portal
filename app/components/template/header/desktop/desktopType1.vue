@@ -54,9 +54,10 @@ const logosName = computed(() => {
     <div class="flex items-center gap-2">
       <MiscLanguageSwitcher />
       <MiscDarkMode />
-      <UIcon name="i-heroicons-bell" class="w-6 h-6" />
+      <MiscSearch />
       <ProfileHeaderMenu />
       
     </div>
+    
   </div>
 </template>

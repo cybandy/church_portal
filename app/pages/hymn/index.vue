@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { UiHymnResponse } from '~/types';
-import { chunk } from 'es-toolkit';
 
 // api - custom $fetch
 const { $api } = useNuxtApp()
@@ -15,6 +14,7 @@ const hymnals = ref([] as UiHymnResponse[])
 const limit = ref(30)
 const offset = ref(0)
 const count = ref(0)
+const loading = ref(false) // track loading hymns
 
 const queryParams = computed(() => {
   return {
@@ -23,70 +23,60 @@ const queryParams = computed(() => {
   }
 })
 
-await useAsyncData('hymnals_fetch', async () => { 
-  if (!q.value || q.value == '') {
-    await listHymnFunc()
-    return
-  }
-}, {
-  watch:[q,queryParams]
-})
-
-// search function
-const searchFunc = async () => {
-  if (!q.value || q.value == '') {
-    await listHymnFunc()
-    return
-  }
-  const { hymns } = await $fetch('/api/hymn/search', {
-    method: 'GET',
-    query: {
-      q: q.value,
-      ...queryParams.value
-    }
-  })
-  hymn_ind.value = 0
-  if (hymns) {
-    hymnals.value = hymns as any
-  }
-
-}
 
 // list function
-const listHymnFunc = async () => {
+const listHymnFunc = async (update = false) => {
   hymn_ind.value = 0
+  loading.value = true
   const { hymns, count: _count } = await $fetch('/api/hymn/list', {
     query: {
       ...queryParams.value
     }
   })
+
   if (hymns) {
-    hymnals.value.push(...hymns as any)
+    if (update) {
+      hymnals.value = hymns as any
+    } else {
+      hymnals.value.push(...hymns as any)
+    }
     count.value = Number(_count)
   }
+  loading.value = false
 }
 
+watch(q, async () => {
+  if (!q.value) {
+    offset.value = 0
+    count.value = 0
+    await listHymnFunc(true)
+  }
+})
+
 const loadMore = computed(() => {
-  return queryParams.value.offset < count.value
+  return !loading.value && queryParams.value.offset < count.value
 })
 
 
 // scrolling
-const scrollDown = () => {
-  offset.value++
+const scrollDown = async () => {
+  if (!q.value) {
+    offset.value++
+    await listHymnFunc()
+  }
 }
+
+
 
 await listHymnFunc()
 
 
-//ui
-const button_ui = { font: 'first-letter:capitalize' }
+
 </script>
 
 <template>
-  <UContainer class="flex items-center justify-center pt-[60px] h-full">
-    <HymnListing @scroll="scrollDown" v-model:q="q" v-model:hymnals="hymnals" @search="searchFunc" :count="count"
-      :load-more="loadMore" />
+  <UContainer class="flex items-center justify-center pt-[60px] h-[calc(100vh-66px)] md:h-[calc(100vh-80px)] overflow-y-hidden">
+    <HymnListing @scroll="scrollDown" v-model:q="q" v-model:hymnals="hymnals" :count="count" :load-more="loadMore" />
   </UContainer>
 </template>
 

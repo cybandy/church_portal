@@ -15,7 +15,7 @@ const items = computed(()=>[
 </script>
 
 <template>
-  <div>
+  <div class="flex">
     <UDropdown :items="items">
       <div>
         <UAvatar v-if="isLoggedIn" size="sm" :src="user.avatar_url || ''" :alt="`${user.first_name} ${user.last_name}`" />

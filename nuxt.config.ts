@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxtjs/seo",
     '@nuxtjs/device',
+    '@nuxtjs/algolia'
   ],
   runtimeConfig: {
     postgres: {
@@ -38,6 +39,11 @@ export default defineNuxtConfig({
     public: {
       jwt: {
         secret_key: process.env.JWT_SECRET || 'jwt_secret_key'
+      },
+    },
+    private: {
+      algolia: {
+        write_key: process.env.ALGOLIA_WRITE_KEY || ""
       }
     }
   },

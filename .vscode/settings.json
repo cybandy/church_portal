@@ -34,12 +34,15 @@
         "editor.defaultFormatter": "vscode.typescript-language-features"
     },
     "cSpell.words": [
+        "algoliasearch",
         "antfu",
         "churchportal",
         "consola",
         "datetime",
+        "iconify",
         "ilike",
         "musicfyplayer",
+        "nnyeso",
         "Noto",
         "persistedstate",
         "pinia",

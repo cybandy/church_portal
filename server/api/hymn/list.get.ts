@@ -7,15 +7,16 @@ import { sql } from 'drizzle-orm'
 
 const queryParams = z.object({
   number: z.string().default(''),
-  limit: z.preprocess((val) => parseInt(val as string, 10), z.number().default(20)),
-  offset: z.preprocess((val) => parseInt(val as string, 10), z.number().default(0)),
-  // offset: z.number().default(0),
+  limit: z.preprocess((val) => { return val ? Number(val) : 20 }, z.number()),
+  offset: z.preprocess((val) => { return val ? Number(val) : 0 }, z.number()),
   language: z.string().default('twi')
 })
 
 
 export default defineEventHandler(async (event) => {
-  const { number, limit, offset, language } = await getValidatedQuery(event, queryParams.parse)
+  const query = await getValidatedQuery(event, queryParams.parse)
+
+  const { number, limit, offset, language } = query
 
   const db = useDrizzle()
 

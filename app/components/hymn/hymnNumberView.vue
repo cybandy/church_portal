@@ -86,33 +86,29 @@ watch(is_full_screen, async () => {
   } else {
     unlockOrientation()
   }
-
-  console.log(
-    isSupported.value,
-    orientation.value,
-    angle.value
-  );
 })
 </script>
 
 <template>
-  <div class="h-full">
+  <div class="h-full w-full">
     <template v-if="is_full_screen">
       <UContainer @mouseenter="isMouseMoving = true" @mouseleave="isMouseMoving = false" ref="mouseEl"
-        class="w-full h-full bg-white dark:bg-gray-950">
-        <h1 class="text-xl md:text-3xl lg:text-4xl font-semibold w-full text-center pt-10">
+        class="w-full h-full bg-white dark:bg-gray-950" :ui="{
+          constrained: 'max-w-full'
+        }">
+        <h1 class="text-xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-semibold w-full text-center pt-10">
           {{ hymns[0]?.number }} - {{ hymns[0]?.title }}
         </h1>
         <template v-for="(_stanza, ind) of stanzas" :key="ind">
           <div v-if="ind == stanzaNumber" class="relative w-full h-full flex items-center">
             <div class="w-full h-full grid gap-5" :class="[hymns.length == 2 && 'grid-cols-2']">
               <div v-for="(stanza, j) of _stanza" :key="j"
-                class="w-full flex flex-col items-start justify-start pt-14 text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl text-pretty">
+                class="w-full flex flex-col items-start justify-start pt-14 text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-pretty">
                 <div class="w-fit space-y-1">
                   <span class="font-bold text-black dark:text-white inline-block w-full">{{ stanza.number + 1 }}</span>
                   <div :class="[stanza.is_refrain && 'italic']"
-                    class="text-gray-800 dark:text-gray-200 leading-loose space-y-1">
-                    <p v-for="line of stanza.verse.split('\n')" class="text-start font-bold" :class="[
+                    class="text-gray-800 dark:text-gray-200 leading-loose space-y-1 text-start font-bold">
+                    <p v-for="line of stanza.verse.split('\n')" :class="[
                       ['nnyeso', 'refrain'].includes(line.toLocaleLowerCase()) ? 'font-semibold text-primary' : ''
                     ]">
                       {{ line }}
@@ -128,11 +124,6 @@ watch(is_full_screen, async () => {
               icon="i-heroicons-chevron-right-20-solid" @click="next" /> -->
           </div>
         </template>
-        <!-- <template v-for="(_stanza,ind) of full_screen_text">
-          <div class="relative w-screen h-screen flex items-center">
-
-          </div>
-        </template> -->
       </UContainer>
     </template>
     <template v-else>

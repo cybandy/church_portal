@@ -3,8 +3,8 @@
 </script>
 
 <template>
-  <div class="w-screen h-screen">
-    <UContainer>
+  <div class="w-full h-full">
+    <UContainer class="">
       <TemplateHeaderV1 />
     </UContainer>
     <div class="h-full">
