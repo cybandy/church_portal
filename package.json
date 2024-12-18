@@ -13,6 +13,7 @@
     "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
     "@nuxt/eslint": "^0.4.0",
     "@nuxt/fonts": "^0.7.2",
     "@nuxt/image": "^1.7.0",
@@ -26,7 +27,7 @@
     "@vueuse/core": "^10.11.0",
     "@vueuse/nuxt": "^10.11.0",
     "bcrypt": "^5.1.1",
-    "drizzle-orm": "^0.32.1",
+    "drizzle-orm": "^0.32.2",
     "drizzle-zod": "^0.5.1",
     "es-toolkit": "^1.16.0",
     "jsonwebtoken": "^9.0.2",

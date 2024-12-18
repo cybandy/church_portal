@@ -74,7 +74,6 @@ const full_screen_text = computed(() => {
     }
   })
 })
-console.log(full_screen_text.value)
 watch(is_full_screen, async () => {
 
   if (is_full_screen.value) {

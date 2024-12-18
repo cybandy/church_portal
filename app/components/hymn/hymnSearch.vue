@@ -1,24 +1,29 @@
 <script setup lang='js'>
 const q = ref('')
+const hymns = ref([])
 const isOpen = ref(false)
 const { search, result } = useAlgoliaSearch('hymns')
 
 watch(q, async () => {
   if (q) {
-    await search({query:q.value})
+    await search({ query: q.value })
+    hymns.value = result.value.hits
+  } else {
+    hymns.value = []
   }
 })
 
 watch(isOpen, () => {
   if (!isOpen.value) {
     q.value = ''
+    hymns.value = []
   }
 })
 </script>
 
 <template>
   <div class="flex">
-    <UIcon @click="() => isOpen = true" name="i-heroicons-magnifying-glass" class="w-6 h-6" />
+    <UIcon @click="() => isOpen = true" name="i-heroicons-magnifying-glass" class="w-6 h-6 cursor-pointer" />
     <UModal v-model="isOpen">
       <UCard :ui="{ base: 'min-w-fit' }">
         <template #header>
@@ -35,7 +40,7 @@ watch(isOpen, () => {
        
 
         <div class="min-w-full sm:min-w-[500px] md:min-w-[650px] max-w-full sm:max-w-[550px] md:max-w-[650px] grid gap-5">
-          <div @click="() => { navigateTo(useI18nLink(`/hymn/${hymn.number}`)); isOpen=false}" v-for="hymn of result.hits" :key="(hymn.number)" class="ring-1 ring-gray-200 dark:ring-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 sm:p-4 rounded-lg hover:cursor-pointer">
+          <div @click="() => { navigateTo(useI18nLink(`/hymn/${hymn.number}`)); isOpen=false}" v-if="hymns.length" v-for="hymn of hymns" :key="(hymn.number)" class="ring-1 ring-gray-200 dark:ring-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 sm:p-4 rounded-lg hover:cursor-pointer">
 
             <div class="grid grid-cols-[54px_minmax(0,1fr)] grid-rows-[32px_minmax] gap-y-2 gap-x-1">
               <div class="flex items-center">
