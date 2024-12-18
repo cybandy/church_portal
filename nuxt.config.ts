@@ -130,7 +130,11 @@ export default defineNuxtConfig({
     },
     scheduledTasks: {
       '12 0 * * *': ['db:deleted_jwt']
+    },
+    prerender: {
+      autoSubfolderIndex: false
     }
+
   }
 
 });
