@@ -86,6 +86,26 @@ watch(is_full_screen, async () => {
     unlockOrientation()
   }
 })
+
+function languageLabel(ind:number) {
+  switch (props.hymns[ind]?.language) {
+    case 'eng':
+      return 'english'
+    default:
+      return props.hymns[ind]?.language
+  }
+}
+
+function textSize() {
+  switch (props.hymns.length) {
+    case 1:
+      return 'text-2xl sm:text-3xl lg:text-4xl xl:text-4xl'
+    case 2: 
+      return 'text-2xl sm:text-3xl md:text-lg lg:text-2xl xl:text-3xl'
+    default:
+      return ''
+  }
+}
 </script>
 
 <template>
@@ -104,7 +124,7 @@ watch(is_full_screen, async () => {
               <div v-for="(stanza, j) of _stanza" :key="j"
                 class="w-full flex flex-col items-start justify-start pt-14 text-base sm:text-lg md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl text-pretty">
                 <div class="w-fit space-y-1">
-                  <span class="font-bold text-black dark:text-white inline-block w-full">{{ stanza.number + 1 }}</span>
+                  <!-- <span :class="[stanza.is_refrain&&'hidden']" class="font-bold text-black dark:text-white inline-block w-full">{{ stanza.number + 1 }}</span> -->
                   <div :class="[stanza.is_refrain && 'italic']"
                     class="text-gray-800 dark:text-gray-200 leading-loose space-y-1 text-start font-bold">
                     <p v-for="line of stanza.verse.split('\n')" :class="[
@@ -126,11 +146,19 @@ watch(is_full_screen, async () => {
       </UContainer>
     </template>
     <template v-else>
-      <div class="grid gap-5" :class="[hymns.length == 2 && 'md:grid-cols-2']">
-        <div v-for="(hymn, i) of hymns" class="flex flex-col justify-start items-center" :key="i">
-          <div class="w-fit grid gap-8 md:gap-10">
-            <div v-for="(stanza, j) of hymn.stanzas" :key="j" class="w-full space-y-1 text-sm sm:text-base">
-              <span class="font-bold text-black dark:text-white">{{ stanza.number + 1 }}</span>
+      <div class="grid" :class="[hymns.length == 2 && 'md:grid-cols-2 md:gap-3']">
+        <div v-for="(hymn, i) of hymns" class="flex flex-col justify-start md:items-center" :key="i">
+
+          <div v-if="i!==hymns.length" class="py-5 md:hidden">
+          <UDivider :label="languageLabel(i)" orientation="horizontal" class="md:hidden" :ui="{label:'capitalize'}" />
+          </div>
+
+          <p class="text-gray-500 dark:text-gray-400 text-xl capitalize pb-5 hidden md:block">{{ languageLabel(i) }}</p>
+
+          <div class="w-fit grid gap-10">
+            
+            <div v-for="(stanza, j) of hymn.stanzas" :key="j" class="w-full space-y-1" :class="[textSize()]">
+              <!-- <span class="font-bold text-black dark:text-white">{{ stanza.number + 1 }}</span> -->
               <div :class="[stanza.is_refrain && 'italic']" class="text-gray-800 dark:text-gray-200 leading-loose">
                 <p v-for="line of stanza.verse.split('\n')" :class="[
                   ['nnyeso', 'refrain'].includes(line.toLocaleLowerCase()) ? 'font-semibold text-primary' : ''
@@ -140,6 +168,7 @@ watch(is_full_screen, async () => {
               </div>
             </div>
           </div>
+          
         </div>
       </div>
     </template>

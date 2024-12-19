@@ -14,6 +14,11 @@ const { playing, currentTime, duration, volume, muted, waiting, ended } = useMed
 })
 
 function playPauseAudio() {
+  if (ended.value) {
+    currentTime.value = 0
+    playing.value = true
+    return
+  }
   playing.value = !playing.value
 }
 function mutedAudio() {
@@ -22,6 +27,8 @@ function mutedAudio() {
 function formatDuration(seconds: number) {
   return new Date(1000 * seconds).toISOString().slice(14, 19)
 }
+
+
 </script>
 
 <template>
@@ -32,7 +39,7 @@ function formatDuration(seconds: number) {
     <template #panel>
       <div class="p-4 bg-gray-200 dark:bg-gray-800 min-w-64 max-w-80 rounded-xl ring-1 ring-gray-100 dark:ring-gray-800 ring-inset space-y-3">
           <div class="space-y-1">
-            <UProgress size="md" :value="currentTime" :max="duration" />
+            <MusicScrubber size="md" v-model="currentTime" :max="duration" />
             <div class="flex items-center justify-end">
               <span class="text-xs/6 text-gray-600 dark:text-gray-300">
                 {{ waiting ? '-- / --' : `${formatDuration(currentTime)} / ${formatDuration(duration)}` }}
@@ -41,10 +48,13 @@ function formatDuration(seconds: number) {
           </div>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-            <UButton size="xs" color="white" @click="playPauseAudio" icon="i-heroicons-play-20-solid" />
-            <UButton size="xs" color="white" @click="playPauseAudio" icon="i-heroicons-pause-20-solid" />
+            <UButton size="xs" color="white" @click="playPauseAudio" :icon="!playing ? 'i-heroicons-play-20-solid' : 'i-heroicons-pause-20-solid'" />
+            <!-- <UButton size="xs" color="white" @click="playPauseAudio" icon="" /> -->
           </div>
-          <UButton size="xs" color="white" @click="mutedAudio" :icon="! muted ? 'i-heroicons-speaker-wave-20-solid' : 'i-heroicons-speaker-x-mark-20-solid'" />
+          <div class="flex items-center gap-1">
+            <UButton size="xs" color="white" @click="mutedAudio" :icon="! muted ? 'i-heroicons-speaker-wave-20-solid' : 'i-heroicons-speaker-x-mark-20-solid'" />
+            <MusicScrubber size="xs" v-model="volume" :max="1" class="w-20" />
+          </div>
           </div>
         </div>
     </template>

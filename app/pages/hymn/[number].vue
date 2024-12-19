@@ -51,19 +51,17 @@ useHead({
 
     <div v-else>
       <UContainer>
-        <div class="py-5 sm:py-7 md:py-8 lg:py-10 grid lg:grid-cols-3 gap-6 items-center ">
-          <div class="hidden lg:block">
-
-          </div>
-          <div class="flex items-center text-center">
-            <h1 class="text-xl md:text-2xl font-semibold w-full">
+        <div class="py-5 sm:py-7 md:py-8 lg:py-10 flex gap-6 items-center ">
+         
+          <div class="flex items-center text-center flex-grow">
+            <h1 class="text-2xl md:text-3xl lg:text-4xl font-semibold w-full">
               {{ number }} - {{ data?.data[0]?.title }}
             </h1>
           </div>
           <div class="flex items-center justify-center lg:justify-end gap-3">
-            <UDropdown :items="all_languages" :popper="{placement:'bottom-start'}" :ui="{item:{label:'first-letter:uppercase'}}">
+            <!-- <UDropdown :items="all_languages" :popper="{placement:'bottom-start'}" :ui="{item:{label:'first-letter:uppercase'}}">
               <UIcon name="i-heroicons-language" class="header-icons cursor-pointer" />
-            </UDropdown>
+            </UDropdown> -->
             <!-- <HymnSearch /> -->
             <MusicPlayer v-if="typeof mp3_url == 'string'" :url="mp3_url" />
             <UIcon @click="toggle" dynamic name="material-symbols:fullscreen" class="header-icons cursor-pointer" />

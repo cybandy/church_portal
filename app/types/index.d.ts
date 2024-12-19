@@ -2,7 +2,7 @@ import type { Hymn } from "~~/server/database/types";
 import '@nuxtjs/algolia'
 
 export interface UiHymnResponse extends Omit<Hymn, 'hymnSearch' | 'createdAt' | 'id'> {
-  language: Array<string>
+  // language: Array<string>
 }
 
 export type UiHymnPage = UiHymnResponse & {
