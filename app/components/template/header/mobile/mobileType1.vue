@@ -18,11 +18,12 @@ const favicon = computed(() => {
       <UIcon :name="favicon" class="w-[33.38px] h-[30px]" />
     </NuxtLinkLocale>
     <div class="flex items-center gap-2">
+      <MiscSearch />
       <MiscDarkMode />
-      <UIcon name="i-heroicons-bell" class="w-6 h-6 cursor-pointer" />
+      <!-- <UIcon name="i-heroicons-bell" class="w-6 h-6 cursor-pointer" />
       <div>
        <ProfileHeaderMenu />
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

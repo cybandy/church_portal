@@ -122,7 +122,7 @@ export default defineNuxtConfig({
     format: ['webp', 'avif']
   },
   ui: {
-    global: true
+    // global: true
   },
   nitro: {
     experimental: {
@@ -135,6 +135,8 @@ export default defineNuxtConfig({
       autoSubfolderIndex: false
     }
 
+  },
+  experimental: {
+    inlineRouteRules: true
   }
-
 });

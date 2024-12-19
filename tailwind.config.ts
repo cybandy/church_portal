@@ -11,7 +11,13 @@ export default <Partial<Config>>{
       },
       fontFamily: {
         sans: ['Noto Sans', ...fontFamily.sans]
+      },
+      screens: {
+        // "2xs": "480px",
+        xs: "576px",
+        xxs: "480px"
       }
-    }
+    },
+
   }
 }

@@ -42,20 +42,20 @@ const logosName = computed(() => {
 
 <template>
   <div class="flex items-center justify-between py-4">
-    <ClientOnly>
+    <!-- <ClientOnly> -->
       <ULink :to="useI18nLink('/')">
         <UIcon :name="logosName" class="w-[190px] h-[42px]" />
       </ULink>
-      <template #fallback>
-        <span class="w-[190px] h-[42px]"></span>
-      </template>
-    </ClientOnly>
-    <UHorizontalNavigation :links="links" :ui="{wrapper:'justify-center'}" />
+      <!-- <template #fallback> -->
+        <!-- <span class="w-[190px] h-[42px]"></span> -->
+      <!-- </template> -->
+    <!-- </ClientOnly> -->
+    <!-- <UHorizontalNavigation :links="links" :ui="{wrapper:'justify-center'}" /> -->
     <div class="flex items-center gap-2">
-      <MiscLanguageSwitcher />
+      <!-- <MiscLanguageSwitcher /> -->
       <MiscDarkMode />
       <MiscSearch />
-      <ProfileHeaderMenu />
+      <!-- <ProfileHeaderMenu /> -->
       
     </div>
     

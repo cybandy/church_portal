@@ -1,30 +1,83 @@
 <script lang="ts" setup>
+import type { UiHymnResponse } from '~/types';
 
-const audioPlayer = ref<HTMLAudioElement>()
-const { playing, currentTime, duration, volume, muted, waiting, ended } = useMediaControls(audioPlayer, {
-  src: "https://www.hymnalaccompanist.com/mp3/3.mp3"
+// api - custom $fetch
+const { $api } = useNuxtApp()
+
+// search query
+const q = ref('')
+
+const hymn_ind = ref(0)
+// const hymn_hymn = ref([] as UiHymnResponse[][])
+const hymnals = ref([] as UiHymnResponse[])
+
+const limit = ref(30)
+const offset = ref(0)
+const count = ref(0)
+const loading = ref(false) // track loading hymns
+
+const queryParams = computed(() => {
+  return {
+    limit: limit.value,
+    offset: offset.value * limit.value
+  }
 })
 
-function playPauseAudio() {
-  playing.value = !playing.value
+
+// list function
+const listHymnFunc = async (update = false) => {
+  hymn_ind.value = 0
+  loading.value = true
+  const { hymns, count: _count } = await $fetch('/api/hymn/list', {
+    query: {
+      ...queryParams.value
+    }
+  })
+
+  if (hymns) {
+    if (update) {
+      hymnals.value = hymns as any
+    } else {
+      hymnals.value.push(...hymns as any)
+    }
+    count.value = Number(_count)
+  }
+  loading.value = false
 }
-function mutedAudio() {
-  muted.value = !muted.value
+
+watch(q, async () => {
+  if (!q.value) {
+    offset.value = 0
+    count.value = 0
+    await listHymnFunc(true)
+  }
+})
+
+const loadMore = computed(() => {
+  return !loading.value && queryParams.value.offset < count.value
+})
+
+
+// scrolling
+const scrollDown = async () => {
+  if (!q.value) {
+    offset.value++
+    await listHymnFunc()
+  }
 }
-function formatDuration(seconds: number) {
-  return new Date(1000 * seconds).toISOString().slice(14, 19)
-}
+
+
+
+await listHymnFunc()
+
+
 
 </script>
 
 <template>
-  <div>
-    <UContainer>
-      <div>
-        good news
-      </div>
-    </UContainer>
-  </div>
+  <UContainer class="flex items-center justify-center pt-[30px] h-[calc(100vh-66px)] md:h-[calc(100vh-80px)] overflow-y-hidden">
+    <HymnListing @scroll="scrollDown" v-model:q="q" v-model:hymnals="hymnals" :count="count" :load-more="loadMore" />
+  </UContainer>
 </template>
 
 <style scoped></style>

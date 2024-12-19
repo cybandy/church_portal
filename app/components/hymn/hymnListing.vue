@@ -74,8 +74,8 @@ const { reset } = useInfiniteScroll(
       </template>
 
         <div ref="el"id="scrollContainer" class="space-y-5 h-full overflow-y-scroll scroll-smooth">
-
-        <div v-for="hymn of hymnals" :key="(hymn.number)"
+          <HymnCard v-if="hymnals.length" v-for="hymn of hymnals" :hymn="hymn" :key="hymn.number" />
+        <!-- <div v-for="hymn of hymnals" :key="(hymn.number)"
           class="ring-1 ring-gray-200 dark:ring-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 sm:p-4 rounded-lg">
 
           <div class="grid grid-cols-[54px_minmax(0,1fr)] grid-rows-[32px_minmax] gap-y-2 gap-x-1">
@@ -112,7 +112,7 @@ const { reset } = useInfiniteScroll(
             </div>
 
           </div>
-        </div>
+        </div> -->
       </div>
     </UCard>
   </div>
