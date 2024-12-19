@@ -44,7 +44,7 @@ function clear() {
        
 
         <div class="min-w-full sm:min-w-[500px] grid gap-5">
-          <HymnCard v-for="hymn of hymns" :hymn="hymn" :key="hymn.number" />
+          <HymnCard v-for="hymn of hymns" :hymn="hymn" :key="hymn.number" @change-route="()=>isOpen=false" />
         </div>
       
       </UCard>

@@ -4,8 +4,13 @@ const props = defineProps({
     type: String,
     required: true
   },
-  label: String
+  label: String,
+  icon:{
+    type: String,
+    default: 'i-heroicons-musical-note'
+  }
 })
+
 const url = computed(() => props.url)
 
 const audioPlayer = ref<HTMLAudioElement>()
@@ -30,7 +35,12 @@ function formatDuration(seconds: number) {
 </script>
 
 <template>
-  <div
+  <div class="flex w-fit">
+    <UPopover>
+      <UIcon :name="icon" class="header-icons cursor-pointer" :popper="{ placement: 'top-end' }" />
+
+      <template #panel>
+        <div
           class="p-4 bg-gray-200 dark:bg-gray-800 min-w-64 max-w-80 rounded-xl ring-1 ring-gray-100 dark:ring-gray-800 ring-inset space-y-3">
           <div class="space-y-1">
             <MusicScrubber size="md" v-model="currentTime" :max="duration" />
@@ -53,8 +63,10 @@ function formatDuration(seconds: number) {
             </div>
           </div>
         </div>
+      </template>
+    </UPopover>
+    <audio ref="audioPlayer" />
+  </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

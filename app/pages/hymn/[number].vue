@@ -63,7 +63,7 @@ useHead({
               <UIcon name="i-heroicons-language" class="header-icons cursor-pointer" />
             </UDropdown> -->
             <!-- <HymnSearch /> -->
-            <MusicPlayer v-if="typeof mp3_url == 'string'" :url="mp3_url" />
+            <MusicPlayerPopover v-if="typeof mp3_url == 'string'" :url="mp3_url" />
             <UIcon @click="toggle" dynamic name="material-symbols:fullscreen" class="header-icons cursor-pointer" />
           </div>
         </div>
