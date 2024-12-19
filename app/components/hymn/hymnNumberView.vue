@@ -163,7 +163,7 @@ function textSize() {
                 <p v-for="line of stanza.verse.split('\n')" :class="[
                   ['nnyeso', 'refrain'].includes(line.toLocaleLowerCase()) ? 'font-semibold text-primary' : ''
                 ]">
-                  {{ line }}
+                  {{ line.toLocaleLowerCase()==='nnyeso' ? 'Nnyesoɔ' : line }}
                 </p>
               </div>
             </div>
