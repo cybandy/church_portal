@@ -47,15 +47,15 @@ export default defineEventHandler(async (event) => {
     await tx.insert(DBTables.stanza)
       .values(stanzaPayload)
       .returning({
-      id:DBTables.stanza.id
+        id: DBTables.stanza.id
       }).catch((error) => {
         throw createError(error)
-        
+
       })
-    
+
     const hymnals = await tx.query.hymn.findMany({
       where(fields, operators) {
-        return operators.inArray(fields.id, hymns.map(x=>x.id))
+        return operators.inArray(fields.id, hymns.map(x => x.id))
       },
     })
 

@@ -146,31 +146,9 @@ function textSize() {
       </UContainer>
     </template>
     <template v-else>
-      <div class="grid" :class="[hymns.length == 2 && 'md:grid-cols-2 md:gap-3']">
-        <div v-for="(hymn, i) of hymns" class="flex flex-col justify-start md:items-center" :key="i">
-
-          <div v-if="i!==hymns.length" class="py-5 md:hidden">
-          <UDivider :label="languageLabel(i)" orientation="horizontal" class="md:hidden" :ui="{label:'capitalize'}" />
-          </div>
-
-          <p class="text-gray-500 dark:text-gray-400 text-xl capitalize pb-5 hidden md:block">{{ languageLabel(i) }}</p>
-
-          <div class="w-fit grid gap-10">
-            
-            <div v-for="(stanza, j) of hymn.stanzas" :key="j" class="w-full space-y-1" :class="[textSize()]">
-              <!-- <span class="font-bold text-black dark:text-white">{{ stanza.number + 1 }}</span> -->
-              <div :class="[stanza.is_refrain && 'italic']" class="text-gray-800 dark:text-gray-200 leading-loose">
-                <p v-for="line of stanza.verse.split('\n')" :class="[
-                  ['nnyeso', 'refrain'].includes(line.toLocaleLowerCase()) ? 'font-semibold text-primary' : ''
-                ]">
-                  {{ line.toLocaleLowerCase()==='nnyeso' ? 'Nnyesoɔ' : line }}
-                </p>
-              </div>
-            </div>
-          </div>
-          
-        </div>
-      </div>
+      <HymnViewPage :hymns="hymns" />
     </template>
+
+    
   </div>
 </template>
