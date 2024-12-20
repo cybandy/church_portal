@@ -3,6 +3,7 @@
   "email": "courriel",
   "events": "événements",
   "first_name": "prénom",
+  "fullscreen": "plein écran",
   "gallery": "galerie",
   "hello": "Bonjour",
   "home": "maison",
@@ -10,6 +11,7 @@
   "last_name": "nom de famille",
   "login": "se connecter",
   "login_desc": "bienvenue",
+  "music_player": "lecteur de musique",
   "password": "mot de passe",
   "register": "s'inscrire",
   "registration_desc": "Nous sommes heureux de vous compter parmi nous."

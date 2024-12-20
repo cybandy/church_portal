@@ -60,12 +60,12 @@ useHead({
               <UIcon name="i-heroicons-language" class="header-icons cursor-pointer" />
             </UDropdown> -->
             <!-- <HymnSearch /> -->
-            <UToggle label="Music player">
+            <UTooltip :text="$t('music_player')">
               <MusicPlayerPopover v-if="typeof mp3_url == 'string'" :url="mp3_url" />
-            </UToggle>
-            <UToggle label="Fullscreen">
+            </UTooltip>
+            <UTooltip :text="$t('fullscreen')">
               <UIcon @click="toggle" dynamic name="material-symbols:fullscreen" class="header-icons cursor-pointer" />
-            </UToggle>
+            </UTooltip>
           </div>
         </div>
       </UContainer>

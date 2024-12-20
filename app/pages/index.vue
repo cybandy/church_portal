@@ -71,7 +71,11 @@ const scrollDown = async () => {
 await listHymnFunc()
 
 
-
+//seo
+defineOgImageComponent('Nuxt', {
+  title: 'PraisePortal',
+  description: 'Enter into his gates with thanksgiving, and into his courts with praise: be thankful unto him, and bless his name. Psalm 100:4'
+})
 </script>
 
 <template>

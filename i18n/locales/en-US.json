@@ -3,6 +3,7 @@
   "email": "e-mail",
   "events": "events",
   "first_name": "first name",
+  "fullscreen": "fullscreen",
   "gallery": "gallery",
   "hello": "Hello",
   "home": "home",
@@ -10,6 +11,7 @@
   "last_name": "last name",
   "login": "login",
   "login_desc": "welcome back",
+  "music_player": "music player",
   "password": "password",
   "register": "register",
   "registration_desc": "glad to join have you join us."

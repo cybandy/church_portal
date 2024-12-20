@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const NuxtImg = resolveComponent('NuxtImg')

@@ -5,6 +5,10 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  site: {
+    url: process.env.BASE_URL || 'https://praiseportal.qbtech.dev',
+    name: 'PraisePortal'
+  },
   devServer: {
     port: 443,
     host: 'churchportal.local',
@@ -27,10 +31,10 @@ export default defineNuxtConfig({
     "nuxt-translation-manager",
     '@pinia-plugin-persistedstate/nuxt',
     "@nuxt/scripts",
-    "@nuxt/fonts",
     "@nuxtjs/seo",
     '@nuxtjs/device',
-    '@nuxtjs/algolia'
+    '@nuxtjs/algolia',
+    'nuxt-security'
   ],
   runtimeConfig: {
     postgres: {
@@ -56,8 +60,10 @@ export default defineNuxtConfig({
 
     },
   },
+  'translation-manager': {
+    langDir: '../i18n/locales'
+  },
   i18n: {
-    // vueI18n: './i18n.config.ts',
     baseUrl: process.env.BASE_URL || '',
     langDir: './locales',
     // lazy:true,
@@ -70,7 +76,6 @@ export default defineNuxtConfig({
         files: [
           "en-US.json"
         ],
-        domain: `https://en.${process.env.I18N_DOMAIN}`
       },
       {
         code: 'it',
@@ -80,7 +85,6 @@ export default defineNuxtConfig({
         files: [
           'it-IT.json'
         ],
-        domain: `https://it.${process.env.I18N_DOMAIN}`
       },
       {
         code: 'fr',
@@ -90,7 +94,6 @@ export default defineNuxtConfig({
         files: [
           "fr-FR.json"
         ],
-        domain: `https://fr.${process.env.I18N_DOMAIN}`
       },
       {
         code: 'de',
@@ -100,7 +103,6 @@ export default defineNuxtConfig({
         files: [
           'de-DE.json'
         ],
-        domain: `https://de.${process.env.I18N_DOMAIN}`
       },
     ],
     defaultLocale: 'en',
@@ -114,15 +116,26 @@ export default defineNuxtConfig({
       }
     ]
   },
-  pwa: {
-
-  },
   image: {
     quality: 90,
     format: ['webp', 'avif']
   },
-  ui: {
-    // global: true
+  ogImage: {
+    fonts: [
+      'Noto+Sans:400',
+      'Noto+Sans:700',
+    ]
+  },
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        "img-src": [
+          "`self`", "https", "data:", "https://flagcdn.com",
+        ],
+        "object-src": ["https://flagcdn.com",]
+      },
+      crossOriginResourcePolicy: "cross-origin"
+    }
   },
   nitro: {
     experimental: {

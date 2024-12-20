@@ -3,6 +3,7 @@
   "email": "e-mail",
   "events": "eventi",
   "first_name": "nome",
+  "fullscreen": "schermo intero",
   "gallery": "galleria",
   "hello": "Ciao",
   "home": "casa",
@@ -10,6 +11,7 @@
   "last_name": "cognome",
   "login": "login",
   "login_desc": "bentornato",
+  "music_player": "lettore musicale",
   "password": "password",
   "register": "registro",
   "registration_desc": "Sono lieto di unirmi a voi."
