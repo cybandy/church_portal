@@ -1,7 +1,6 @@
 <script setup lang='ts'>
 import type { UiHymnPage } from '~/types';
-import { groupBy, chunk, maxBy } from 'es-toolkit';
-import { useScreenOrientation } from '@vueuse/core'
+
 
 const props = defineProps({
   hymns: {

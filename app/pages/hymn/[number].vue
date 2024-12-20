@@ -11,11 +11,6 @@ const { data, error, pending } = await useFetch('/api/hymn/retrieve', {
 })
 const hymnStore = useHymnStore()
 const { selected_languages, languages } = storeToRefs(hymnStore)
-const all_languages = computed(() => {
-  const availHymnLanguage = data.value?.data.map(x => x.language as string)
-  const sel_langs = availHymnLanguage?.filter(x => languages.value.includes(x as any)) as string[]
-  return [sel_langs?.map(x=>{return {label:x}})]
-})
 
 const mp3_url = computed(() => {
   return data.value?.data[0]?.mp3
@@ -46,7 +41,9 @@ useHead({
 <template>
   <div>
     <div v-if="!data?.data">
-      no results
+      <div class="w-full min-h-[400px] grid place-content-center">
+        <p>Hymn {{ number }} was not found</p>
+      </div>
     </div>
 
     <div v-else>
@@ -63,8 +60,12 @@ useHead({
               <UIcon name="i-heroicons-language" class="header-icons cursor-pointer" />
             </UDropdown> -->
             <!-- <HymnSearch /> -->
-            <MusicPlayerPopover v-if="typeof mp3_url == 'string'" :url="mp3_url" />
-            <UIcon @click="toggle" dynamic name="material-symbols:fullscreen" class="header-icons cursor-pointer" />
+            <UToggle label="Music player">
+              <MusicPlayerPopover v-if="typeof mp3_url == 'string'" :url="mp3_url" />
+            </UToggle>
+            <UToggle label="Fullscreen">
+              <UIcon @click="toggle" dynamic name="material-symbols:fullscreen" class="header-icons cursor-pointer" />
+            </UToggle>
           </div>
         </div>
       </UContainer>

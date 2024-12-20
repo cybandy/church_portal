@@ -2,7 +2,7 @@
 import type { UiHymnResponse } from '~/types';
 
 // api - custom $fetch
-const { $api } = useNuxtApp()
+// const { $api } = useNuxtApp()
 
 // search query
 const q = ref('')

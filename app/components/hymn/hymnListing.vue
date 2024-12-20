@@ -1,5 +1,4 @@
 <script lang="js" setup>
-import { useI18nLink } from '#imports';
 import { useInfiniteScroll } from '@vueuse/core';
 
 const props = defineProps({
@@ -52,13 +51,11 @@ const el = ref()
 const { reset } = useInfiniteScroll(
   el,
   () => {
-    // console.log('scrolling...')
-    // if (!q.value && hymnals.value.length)
     emits('scroll')
   },
   {
-    distance: 20,
-    interval: 1000,
+    distance: 10,
+    interval: 500,
     canLoadMore:()=> loadMore.value
   }
 )
@@ -80,8 +77,3 @@ const { reset } = useInfiniteScroll(
   </div>
 </template>
 
-<!-- <style scoped>
-#scrollContainer{
-  scrollbar-width: thin;
-}
-</style> -->
