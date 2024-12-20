@@ -134,7 +134,10 @@ export default defineNuxtConfig({
         ],
         "object-src": ["https://flagcdn.com",]
       },
-      crossOriginResourcePolicy: "cross-origin"
+      crossOriginResourcePolicy: "cross-origin",
+      permissionsPolicy: {
+        fullscreen: ["`self`"]
+      }
     }
   },
   nitro: {
