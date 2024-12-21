@@ -1,7 +1,9 @@
 <script lang="ts" setup>
+import { upperFirst } from 'es-toolkit';
+
 const route = useRoute()
 const number = route.params.number as string
-
+const { t } = useI18n()
 const { data } = await useFetch('/api/hymn/retrieve', {
   method: 'get',
   query: {
@@ -32,7 +34,7 @@ const { isOutside } = useMouseInElement(fullScreenEl)
 
 // seo
 useHead({
-  title: `Hymn #${number}`
+  title: upperFirst(`${t('hymn')} #${number}`)
 })
 </script>
 
