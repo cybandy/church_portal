@@ -1,7 +1,7 @@
 <script lang="js" setup>
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
-const NuxtImg = resolveComponent('NuxtImg')
+// const NuxtImg = resolveComponent('NuxtImg')
 
 const items = computed(() => {
   return locales.value.map((x) => {
@@ -11,7 +11,7 @@ const items = computed(() => {
         src: `https://flagcdn.com/${x.name}.svg`,
         alt: x.code,
         size: '3xs',
-        as: NuxtImg
+        // as: NuxtImg
       },
       click: () => {
         navigateTo(switchLocalePath(x.code))
@@ -33,7 +33,6 @@ const activeFlag = computed(() => (locales.value.filter(x => x.code == locale.va
         variant="ghost"
       >
         <UAvatar
-          :as="NuxtImg"
           :src="`https://flagcdn.com/${activeFlag}.svg`"
           :alt="locale"
           size="3xs"

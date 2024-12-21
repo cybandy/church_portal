@@ -138,9 +138,9 @@ export default defineNuxtConfig({
     headers: {
       contentSecurityPolicy: {
         'img-src': [
-          '`self`', 'https', 'data:', 'https://flagcdn.com',
+          '`self`', 'https://flagcdn.com',
         ],
-        'object-src': ['https://flagcdn.com',]
+        'object-src': ['https://flagcdn.com', '`self`',]
       },
       crossOriginResourcePolicy: 'cross-origin',
       permissionsPolicy: {
