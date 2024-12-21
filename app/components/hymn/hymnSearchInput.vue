@@ -15,8 +15,8 @@ const props = defineProps({
 
 const emits = defineEmits(['update:modelValue', 'search'])
 const q = computed({
-  get:()=>props.modelValue,
-  set:(val)=>emits('update:modelValue', val)
+  get: () => props.modelValue,
+  set: val => emits('update:modelValue', val)
 })
 
 watch(q, async () => {
@@ -29,11 +29,12 @@ watch(q, async () => {
         title: x.title,
         language: x.language,
         author: x.author,
-        mp3:x.mp3
+        mp3: x.mp3
       }
     })
-    emits('search',[sortBy(_d,['number']),result.value.nbHits])
-  } else {
+    emits('search', [sortBy(_d, ['number']), result.value.nbHits])
+  }
+  else {
     emits('search')
   }
 })
@@ -45,14 +46,32 @@ function clear() {
 
 <template>
   <div class="">
-    <UInput v-model="q" size="md" icon="i-heroicons-magnifying-glass-20-solid" color="white" placeholder="Search..."
-      autocomplete="off" :ui="{ icon: { trailing: { pointer: '' } } }">
+    <UInput
+      v-model="q"
+      size="md"
+      icon="i-heroicons-magnifying-glass-20-solid"
+      color="white"
+      placeholder="Search..."
+      autocomplete="off"
+      :ui="{ icon: { trailing: { pointer: '' } } }"
+    >
       <template #trailing>
-        <UButton v-if="q !== ''" color="gray" variant="link" icon="i-heroicons-x-mark-20-solid" :padded="false"
-          @click="clear" />
-        <UButton v-else color="gray" variant="ghost" icon="ic:round-subdirectory-arrow-left" :padded="false" />
+        <UButton
+          v-if="q !== ''"
+          color="gray"
+          variant="link"
+          icon="i-heroicons-x-mark-20-solid"
+          :padded="false"
+          @click="clear"
+        />
+        <UButton
+          v-else
+          color="gray"
+          variant="ghost"
+          icon="ic:round-subdirectory-arrow-left"
+          :padded="false"
+        />
       </template>
     </UInput>
-
   </div>
 </template>

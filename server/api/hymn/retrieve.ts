@@ -3,7 +3,7 @@ import { groupBy } from 'es-toolkit'
 
 const queryParams = z.object({
   number: z.string(),
-  
+
 })
 
 export default defineEventHandler(async (event) => {
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
   const db = useDrizzle()
   const res = await db.transaction(async (tx) => {
-    let query = await tx.query.hymn.findMany({
+    const query = await tx.query.hymn.findMany({
       where(fields, operators) {
         return operators.eq(fields.number, number)
       },
@@ -32,6 +32,6 @@ export default defineEventHandler(async (event) => {
   })
 
   return {
-    data:res
+    data: res
   }
 })

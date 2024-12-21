@@ -1,15 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-04-03',
-  devtools: { enabled: true },
-  future: {
-    compatibilityVersion: 4,
-  },
-  site: {
-    url: process.env.BASE_URL || 'https://praiseportal.qbtech.dev',
-    name: 'PraisePortal'
-  },
-  devServer: {
+  'compatibilityDate': '2024-04-03',
+  'css': [
+    '~~/app/assets/css/main.css'
+  ],
+  'devServer': {
     port: 443,
     host: 'churchportal.local',
     https: {
@@ -17,41 +12,8 @@ export default defineNuxtConfig({
       cert: './ssl/churchportal.local.pem'
     }
   },
-  css: [
-    '~~/app/assets/css/main.css'
-  ],
-  modules: [
-    '@vueuse/nuxt',
-    '@pinia/nuxt',
-    '@nuxtjs/i18n',
-    '@nuxt/image',
-    '@nuxt/eslint',
-    "@nuxt/ui",
-    "@vite-pwa/nuxt",
-    "nuxt-translation-manager",
-    '@pinia-plugin-persistedstate/nuxt',
-    "@nuxt/scripts",
-    "@nuxtjs/seo",
-    '@nuxtjs/device',
-    '@nuxtjs/algolia',
-    'nuxt-security'
-  ],
-  runtimeConfig: {
-    postgres: {
-      db_url: process.env.DATABASE_URL || ''
-    },
-    public: {
-      jwt: {
-        secret_key: process.env.JWT_SECRET || 'jwt_secret_key'
-      },
-    },
-    private: {
-      algolia: {
-        write_key: process.env.ALGOLIA_WRITE_KEY || ""
-      }
-    }
-  },
-  eslint: {
+  'devtools': { enabled: true },
+  'eslint': {
     config: {
       stylistic: {
         indent: 2,
@@ -60,10 +22,13 @@ export default defineNuxtConfig({
 
     },
   },
-  'translation-manager': {
-    langDir: '../i18n/locales'
+  'experimental': {
+    inlineRouteRules: true
   },
-  i18n: {
+  'future': {
+    compatibilityVersion: 4,
+  },
+  'i18n': {
     baseUrl: process.env.BASE_URL || '',
     langDir: './locales',
     // lazy:true,
@@ -74,7 +39,7 @@ export default defineNuxtConfig({
         language: 'en-US',
         name: 'us',
         files: [
-          "en-US.json"
+          'en-US.json'
         ],
       },
       {
@@ -92,7 +57,7 @@ export default defineNuxtConfig({
         language: 'fr-Fr',
         name: 'fr',
         files: [
-          "fr-FR.json"
+          'fr-FR.json'
         ],
       },
       {
@@ -108,7 +73,7 @@ export default defineNuxtConfig({
     defaultLocale: 'en',
     differentDomains: false
   },
-  icon: {
+  'icon': {
     customCollections: [
       {
         prefix: 'qb-logo',
@@ -116,31 +81,27 @@ export default defineNuxtConfig({
       }
     ]
   },
-  image: {
+  'image': {
     quality: 90,
     format: ['webp', 'avif']
   },
-  ogImage: {
-    fonts: [
-      'Noto+Sans:400',
-      'Noto+Sans:700',
-    ]
-  },
-  security: {
-    headers: {
-      contentSecurityPolicy: {
-        "img-src": [
-          "`self`", "https", "data:", "https://flagcdn.com",
-        ],
-        "object-src": ["https://flagcdn.com",]
-      },
-      crossOriginResourcePolicy: "cross-origin",
-      permissionsPolicy: {
-        fullscreen: ["`self`"]
-      }
-    }
-  },
-  nitro: {
+  'modules': [
+    '@vueuse/nuxt',
+    '@pinia/nuxt',
+    '@nuxtjs/i18n',
+    '@nuxt/image',
+    '@nuxt/eslint',
+    '@nuxt/ui',
+    '@vite-pwa/nuxt',
+    'nuxt-translation-manager',
+    '@pinia-plugin-persistedstate/nuxt',
+    '@nuxt/scripts',
+    '@nuxtjs/seo',
+    '@nuxtjs/device',
+    '@nuxtjs/algolia',
+    'nuxt-security'
+  ],
+  'nitro': {
     experimental: {
       tasks: true
     },
@@ -152,7 +113,46 @@ export default defineNuxtConfig({
     }
 
   },
-  experimental: {
-    inlineRouteRules: true
-  }
+  'ogImage': {
+    fonts: [
+      'Noto+Sans:400',
+      'Noto+Sans:700',
+    ]
+  },
+  'runtimeConfig': {
+    postgres: {
+      db_url: process.env.DATABASE_URL || ''
+    },
+    public: {
+      jwt: {
+        secret_key: process.env.JWT_SECRET || 'jwt_secret_key'
+      },
+    },
+    private: {
+      algolia: {
+        write_key: process.env.ALGOLIA_WRITE_KEY || ''
+      }
+    }
+  },
+  'security': {
+    headers: {
+      contentSecurityPolicy: {
+        'img-src': [
+          '`self`', 'https', 'data:', 'https://flagcdn.com',
+        ],
+        'object-src': ['https://flagcdn.com',]
+      },
+      crossOriginResourcePolicy: 'cross-origin',
+      permissionsPolicy: {
+        fullscreen: ['`self`']
+      }
+    }
+  },
+  'site': {
+    url: process.env.BASE_URL || 'https://praiseportal.qbtech.dev',
+    name: 'PraisePortal'
+  },
+  'translation-manager': {
+    langDir: '../i18n/locales'
+  },
 });

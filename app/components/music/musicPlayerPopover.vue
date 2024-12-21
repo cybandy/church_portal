@@ -5,7 +5,7 @@ const props = defineProps({
     required: true
   },
   label: String,
-  icon:{
+  icon: {
     type: String,
     default: 'i-heroicons-musical-note'
   }
@@ -37,13 +37,22 @@ function formatDuration(seconds: number) {
 <template>
   <div class="flex w-fit">
     <UPopover>
-      <UIcon :name="icon" class="header-icons cursor-pointer" :popper="{ placement: 'top-end' }" />
+      <UIcon
+        :name="icon"
+        class="header-icons cursor-pointer"
+        :popper="{ placement: 'top-end' }"
+      />
 
       <template #panel>
         <div
-          class="p-4 bg-gray-200 dark:bg-gray-800 min-w-64 max-w-80 rounded-xl ring-1 ring-gray-100 dark:ring-gray-800 ring-inset space-y-3">
+          class="p-4 bg-gray-200 dark:bg-gray-800 min-w-64 max-w-80 rounded-xl ring-1 ring-gray-100 dark:ring-gray-800 ring-inset space-y-3"
+        >
           <div class="space-y-1">
-            <MusicScrubber size="md" v-model="currentTime" :max="duration" />
+            <MusicScrubber
+              v-model="currentTime"
+              size="md"
+              :max="duration"
+            />
             <div class="flex items-center justify-end">
               <span class="text-xs/6 text-gray-600 dark:text-gray-300">
                 {{ waiting ? '-- / --' : `${formatDuration(currentTime)} / ${formatDuration(duration)}` }}
@@ -52,14 +61,27 @@ function formatDuration(seconds: number) {
           </div>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <UButton size="xs" color="white" @click="playPauseAudio"
-                :icon="!playing ? 'i-heroicons-play-20-solid' : 'i-heroicons-pause-20-solid'" />
+              <UButton
+                size="xs"
+                color="white"
+                :icon="!playing ? 'i-heroicons-play-20-solid' : 'i-heroicons-pause-20-solid'"
+                @click="playPauseAudio"
+              />
               <!-- <UButton size="xs" color="white" @click="playPauseAudio" icon="" /> -->
             </div>
             <div class="flex items-center gap-1">
-              <UButton size="xs" color="white" @click="mutedAudio"
-                :icon="!muted ? 'i-heroicons-speaker-wave-20-solid' : 'i-heroicons-speaker-x-mark-20-solid'" />
-              <MusicScrubber size="xs" v-model="volume" :max="1" class="w-20" />
+              <UButton
+                size="xs"
+                color="white"
+                :icon="!muted ? 'i-heroicons-speaker-wave-20-solid' : 'i-heroicons-speaker-x-mark-20-solid'"
+                @click="mutedAudio"
+              />
+              <MusicScrubber
+                v-model="volume"
+                size="xs"
+                :max="1"
+                class="w-20"
+              />
             </div>
           </div>
         </div>

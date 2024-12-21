@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { groupBy } from 'es-toolkit'
-import { parseHymnIterator } from '~~/server/utils/hymn'
 import { sql } from 'drizzle-orm'
+import { parseHymnIterator } from '~~/server/utils/hymn'
 // import {groupBy} from 'lodash-es'
 // import { parseHymnGenerator } from '~~/server/utils/hymn'
 
@@ -12,7 +12,6 @@ const queryParams = z.object({
   language: z.string().default('twi')
 })
 
-
 export default defineEventHandler(async (event) => {
   const query = await getValidatedQuery(event, queryParams.parse)
 
@@ -21,7 +20,7 @@ export default defineEventHandler(async (event) => {
   const db = useDrizzle()
 
   const res = await db.transaction(async (tx) => {
-    let query = await tx.query.hymn.findMany({
+    const query = await tx.query.hymn.findMany({
       where(fields, operators) {
         return operators.and(
           // operators.eq(fields.language, 'twi'),
@@ -38,8 +37,8 @@ export default defineEventHandler(async (event) => {
 
     })
 
-    let count = await tx.select({ count: sql<number> `count(*)` }).from(DBTables.hymn)
-    let _count = count[0].count
+    const count = await tx.select({ count: sql<number>`count(*)` }).from(DBTables.hymn)
+    const _count = count[0].count
 
     return { hymns: query, count: _count }
   })
@@ -50,7 +49,7 @@ export default defineEventHandler(async (event) => {
     }).from(DBTables.hymn)
   })
 
-  const groups = groupBy(res.hymns, (x) => x.number as string)
+  const groups = groupBy(res.hymns, x => x.number as string)
   const group_keys = Object.keys(groups)
 
   const gen = parseHymnIterator(res.hymns, 'number')

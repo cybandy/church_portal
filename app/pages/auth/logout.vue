@@ -8,15 +8,14 @@ async function logout() {
 }
 if (isLoggedIn.value) {
   await logout()
-} else {
+}
+else {
   navigateTo(useI18nLink('/auth'))
 }
 </script>
 
 <template>
-  <div>
-    
-  </div>
+  <div />
 </template>
 
 <style scoped>

@@ -1,6 +1,6 @@
-import * as schema from '../../database/schema'
-import { z, } from 'zod'
+import type { z, } from 'zod'
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import type * as schema from '../../database/schema'
 
 export type Member = Omit<typeof schema.members.$inferSelect, 'password_hash'>
 export type NewMember = typeof schema.members.$inferInsert

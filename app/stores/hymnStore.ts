@@ -5,10 +5,10 @@ export const useHymnStore = defineStore({
   id: 'hymnStore',
   state: () => ({
     selected_languages: [] as string[],
-    
+
   }),
   getters: {
-    languages: (store) => hymnLanguagesEnum.enumValues
+    languages: store => hymnLanguagesEnum.enumValues
   },
   actions: {
 

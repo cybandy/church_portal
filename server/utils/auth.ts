@@ -1,9 +1,9 @@
+import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 import jsonwebtoken from 'jsonwebtoken'
-import type { NewMember } from '../database/types'
 import type { H3Event } from 'h3'
 import { z } from 'zod'
-import crypto from 'crypto'
+import type { NewMember } from '../database/types'
 
 type newMemberData = { password: string } & Omit<NewMember, 'id' | 'createdAt' | 'password_hash'>
 
@@ -14,9 +14,7 @@ export const createUserSchema = z.object({
   password: z.string().min(8)
 })
 
-
 export async function useCreateMember(data: newMemberData, event: H3Event) {
-
   if (!data.email || !data.password) {
     throw createError('Email and password are required')
   }
@@ -42,7 +40,7 @@ export async function useLogin(event: H3Event, email: string, password: string) 
   if (!email || !password) throw createError('Email and password are required')
 
   const db = useDrizzle()
-  let member = await db.query.members.findFirst({
+  const member = await db.query.members.findFirst({
     where(fields, operators) {
       return operators.eq(fields.email, email)
     },
@@ -76,7 +74,6 @@ function generateToken(id: string | number, email: string, event: H3Event) {
 }
 
 export function isAuthenticated(event: H3Event, token = '') {
-
   if (!token) return false
   const config = useRuntimeConfig(event)
   try {
@@ -86,7 +83,8 @@ export function isAuthenticated(event: H3Event, token = '') {
       data: user,
       error: null
     }
-  } catch (error) {
+  }
+  catch (error) {
     return {
       status: false,
       error: error,
@@ -97,7 +95,7 @@ export function isAuthenticated(event: H3Event, token = '') {
 
 export async function useGetUser(event: H3Event, email: string) {
   const db = useDrizzle()
-  let member = await db.query.members.findFirst({
+  const member = await db.query.members.findFirst({
     where(fields, operators) {
       return operators.eq(fields.email, email)
     },
@@ -118,9 +116,8 @@ export async function useGetUser(event: H3Event, email: string) {
 }
 
 export async function useLogout(jti: string, exp: number) {
-
   const expiration = new Date(exp * 1000)
-  //save in db
+  // save in db
   const db = useDrizzle()
   await db.insert(DBTables.blackListedTokens).values({ jti, expiration }).onConflictDoNothing({ target: DBTables.blackListedTokens.jti })
   return

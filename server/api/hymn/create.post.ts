@@ -1,5 +1,5 @@
-import { HymnNew, StanzaNew } from "~~/server/database/types"
-import { createHymnBodySchema } from "~~/server/utils/hymn"
+import type { HymnNew, StanzaNew } from '~~/server/database/types'
+import { createHymnBodySchema } from '~~/server/utils/hymn'
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user
@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const body = await readValidatedBody(event, createHymnBodySchema.parse)
 
-  const hymnPayload: Array<HymnNew> = body.map(x => {
+  const hymnPayload: Array<HymnNew> = body.map((x) => {
     return {
       number: x.number,
       language: x.language as any,
@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
     hymns.map((x, i) => {
       const d = body.find(y => y.language == x.language && y.number == x.number)
       if (d) {
-        d.stanzas.map(st => {
+        d.stanzas.map((st) => {
           stanzaPayload.push({
             hymn_id: x.id,
             number: st.number,
@@ -50,7 +50,6 @@ export default defineEventHandler(async (event) => {
         id: DBTables.stanza.id
       }).catch((error) => {
         throw createError(error)
-
       })
 
     const hymnals = await tx.query.hymn.findMany({
@@ -64,9 +63,5 @@ export default defineEventHandler(async (event) => {
 
   // const id = hymn[0].id
 
-
-
   return { hymns: res, count: res.length }
 })
-
-

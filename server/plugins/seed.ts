@@ -10,7 +10,7 @@ export default defineNitroPlugin(async () => {
   // // check if data is already in db
   // const _member = await db.query.members.findMany()
   // if (_member.length > 5) return
-  
+
   // // inserting seed data
   // consola.info("started seeding=======\n")
   // consola.info("seeding members=======")
@@ -19,7 +19,7 @@ export default defineNitroPlugin(async () => {
   //   const member = await db
   //     .insert(schema.members)
   //     .values({
-        
+
   //     })
   // }
 })

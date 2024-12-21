@@ -50,6 +50,7 @@
         "vueuse"
     ],
     "i18n-ally.localesPaths": [
-        "../lang"
+        "i18n",
+        "i18n/locales"
     ]
 }

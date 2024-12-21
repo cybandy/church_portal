@@ -1,8 +1,9 @@
 import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
-export { sql, eq, and, or } from 'drizzle-orm'
 
 import * as schema from '../database/schema'
+
+export { sql, eq, and, or } from 'drizzle-orm'
 
 export const DBTables = schema
 
@@ -18,5 +19,3 @@ export function postgresDatabase() {
 export function useDrizzle() {
   return drizzle(postgresDatabase(), { schema })
 }
-
-

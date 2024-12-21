@@ -1,4 +1,4 @@
-import { isJwtBlacklisted, useGetUser } from "../utils/auth"
+import { isJwtBlacklisted, useGetUser } from '../utils/auth'
 
 export default defineEventHandler(async (event) => {
   const user = event.context.user
@@ -8,7 +8,8 @@ export default defineEventHandler(async (event) => {
     const data = await useGetUser(event, user.email)
 
     return data
-  } else {
+  }
+  else {
     throw createError({
       statusCode: 401,
       statusMessage: 'unauthorized',

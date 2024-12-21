@@ -1,11 +1,9 @@
 <script setup lang='ts'>
 useHead({
-    title: 'Security'
+  title: 'Security'
 })
 </script>
 
 <template>
-<div>
-  
-</div>
+  <div />
 </template>

@@ -3,7 +3,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     useAsyncData(async () => {
       const userStore = useUserStore()
       await userStore.getUser()
-
     })
   })
 })

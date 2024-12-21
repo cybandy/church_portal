@@ -1,23 +1,22 @@
 <script lang="ts" setup>
-
 const route = useRoute()
 const number = route.params.number as string
 
-const { data, error, pending } = await useFetch('/api/hymn/retrieve', {
+const { data } = await useFetch('/api/hymn/retrieve', {
   method: 'get',
   query: {
     number
   }
 })
 const hymnStore = useHymnStore()
-const { selected_languages, languages } = storeToRefs(hymnStore)
+const { selected_languages } = storeToRefs(hymnStore)
 
 const mp3_url = computed(() => {
   return data.value?.data[0]?.mp3
 })
 
 const fullScreenEl = ref<HTMLElement | null>(null)
-const { isFullscreen, enter, exit, toggle } = useFullscreen(fullScreenEl)
+const { isFullscreen, toggle } = useFullscreen(fullScreenEl)
 
 const isMobile = useNuxtApp().$isMobile
 
@@ -29,8 +28,7 @@ watch(isMobile, () => {
   }
 })
 
-const {isOutside} = useMouseInElement(fullScreenEl)
-
+const { isOutside } = useMouseInElement(fullScreenEl)
 
 // seo
 useHead({
@@ -49,7 +47,6 @@ useHead({
     <div v-else>
       <UContainer>
         <div class="py-5 sm:py-7 md:py-8 lg:py-10 flex gap-6 items-center ">
-         
           <div class="flex items-center text-center flex-grow">
             <h1 class="text-2xl md:text-3xl lg:text-4xl font-semibold w-full">
               {{ number }} - {{ data?.data[0]?.title }}
@@ -61,22 +58,40 @@ useHead({
             </UDropdown> -->
             <!-- <HymnSearch /> -->
             <UTooltip :text="$t('music_player')">
-              <MusicPlayerPopover v-if="typeof mp3_url == 'string'" :url="mp3_url" />
+              <MusicPlayerPopover
+                v-if="typeof mp3_url == 'string'"
+                :url="mp3_url"
+              />
             </UTooltip>
             <UTooltip :text="$t('fullscreen')">
-              <UIcon @click="toggle" dynamic name="material-symbols:fullscreen" class="header-icons cursor-pointer" />
+              <UIcon
+                dynamic
+                name="material-symbols:fullscreen"
+                class="header-icons cursor-pointer"
+                @click="toggle"
+              />
             </UTooltip>
           </div>
         </div>
       </UContainer>
 
       <UContainer>
-        <div ref="fullScreenEl" class="relative">
-          <UButton v-show="isFullscreen && !isOutside" @click="toggle" icon="i-heroicons-x-mark-20-solid" color="gray" class="absolute top-1 right-3" />
-          <HymnNumberView  :hymns="(data.data as any)" :is-full-screen="isFullscreen" />
+        <div
+          ref="fullScreenEl"
+          class="relative"
+        >
+          <UButton
+            v-show="isFullscreen && !isOutside"
+            icon="i-heroicons-x-mark-20-solid"
+            color="gray"
+            class="absolute top-1 right-3"
+            @click="toggle"
+          />
+          <HymnNumberView
+            :hymns="(data.data as any)"
+            :is-full-screen="isFullscreen"
+          />
         </div>
-        
-
       </UContainer>
     </div>
   </div>

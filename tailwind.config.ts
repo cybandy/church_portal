@@ -14,8 +14,8 @@ export default <Partial<Config>>{
       },
       screens: {
         // "2xs": "480px",
-        xs: "576px",
-        xxs: "480px"
+        xs: '576px',
+        xxs: '480px'
       }
     },
 

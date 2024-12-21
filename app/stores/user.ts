@@ -15,7 +15,7 @@ export const useUserStore = defineStore({
     paths: ['userToken', 'tab']
   },
   getters: {
-    isLoggedIn: (state) => state.user.id ? true : false
+    isLoggedIn: state => state.user.id ? true : false
   },
   actions: {
     async login(email: string, password: string) {
@@ -39,7 +39,6 @@ export const useUserStore = defineStore({
           },
           method: 'POST',
           onResponseError({ response }) {
-
             useToast().add({
               color: 'red',
               timeout: 6000,
@@ -52,9 +51,9 @@ export const useUserStore = defineStore({
           await this.getUser()
           navigateTo(useI18nLink('/'))
         }
-      } catch (error: any) {
       }
-
+      catch (error: any) {
+      }
     },
 
     async getUser() {

@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import type { HymnNew, StanzaNew, Hymn } from "../database/types";
-import {groupBy} from 'es-toolkit'
+import { groupBy } from 'es-toolkit'
+import type { HymnNew, StanzaNew, Hymn } from '../database/types';
 
 // export type createHymnBodySchema = Array<
 //   HymnNew & StanzaNew
@@ -27,13 +27,13 @@ export async function useCreateHymn(data: HymnNew[]) {
   const db = useDrizzle()
   const hymnal = await db.transaction(async (tx) => {
     return tx.insert(DBTables.hymn)
-    .values(data).returning({
-      id: DBTables.hymn.id,
-      number: DBTables.hymn.number,
-      language: DBTables.hymn.language
-    }).catch((error) => {
-      throw createError(error)
-    })
+      .values(data).returning({
+        id: DBTables.hymn.id,
+        number: DBTables.hymn.number,
+        language: DBTables.hymn.language
+      }).catch((error) => {
+        throw createError(error)
+      })
   })
 
   return hymnal
@@ -43,11 +43,11 @@ export async function useCreateStanza(data: Array<StanzaNew>) {
   const db = useDrizzle()
   const stanza = await db.transaction(async (tx) => {
     const d = await tx.insert(DBTables.stanza)
-    .values(data).returning({
-      id: DBTables.stanza.id
-    }).catch((error) => {
-      throw createError(error)
-    })
+      .values(data).returning({
+        id: DBTables.stanza.id
+      }).catch((error) => {
+        throw createError(error)
+      })
     return d
   })
   // const stanza = await db.insert(DBTables.stanza)
@@ -78,17 +78,17 @@ export async function useGetHymn(id: number) {
  * @param hymns array of hymn
  * @param key string => properties or key of objects in the array
  */
-export function* parseHymnIterator(hymns:Hymn[], key:keyof Hymn) {
-  const groups = groupBy(hymns, (x) => x[key])
+export function* parseHymnIterator(hymns: Hymn[], key: keyof Hymn) {
+  const groups = groupBy(hymns, x => x[key])
   for (const group of Object.values(groups)) {
     const langs = group.map(x => x.language)
     const res_ = {
-        number: group[0].number,
-        title: group[0].title,
-        author: group[0].author,
-        language: langs,
-        mp3: group[0].mp3
-      }
-      yield res_
+      number: group[0].number,
+      title: group[0].title,
+      author: group[0].author,
+      language: langs,
+      mp3: group[0].mp3
+    }
+    yield res_
   }
 }

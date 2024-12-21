@@ -8,7 +8,7 @@ export default defineAppConfig({
     tabs: {
       list: {
         tab: {
-          font:'font-medium capitalize'
+          font: 'font-medium capitalize'
         }
       }
     },

@@ -1,55 +1,70 @@
 <script setup lang="ts">
-const props = defineProps({
+defineProps({
   modelValue: {
     type: String,
   },
   label: {
     type: String,
-    default: "password",
+    default: 'password',
   },
   placeholder: {
     type: String,
-    default: "********",
+    default: '********',
   },
   autocomplete: {
     type: String,
-    default: "current-password",
+    default: 'current-password',
   },
 });
-const pass = ref("");
-const emit = defineEmits(["update:modelValue"]);
+const pass = ref('');
+const emit = defineEmits(['update:modelValue']);
 
 function updateModelValue() {
-  emit("update:modelValue", pass.value);
+  emit('update:modelValue', pass.value);
 }
 
-let passwordType = ref("password");
-let isPassword = ref(true);
+const passwordType = ref('password');
+const isPassword = ref(true);
 const togglePassword = () => {
   if (isPassword.value) {
-    passwordType.value = "text";
-  } else {
-    passwordType.value = "password";
+    passwordType.value = 'text';
+  }
+  else {
+    passwordType.value = 'password';
   }
   isPassword.value = !isPassword.value;
 };
 </script>
 
 <template>
-  <UFormGroup v-bind="$attrs" class="space-y-2" :label="label" name="password">
+  <UFormGroup
+    v-bind="$attrs"
+    class="space-y-2"
+    :label="label"
+    name="password"
+  >
     <UInput
-      @keyup="updateModelValue"
       v-model="pass"
       :type="passwordType"
       :placeholder="placeholder"
       :autocomplete="autocomplete"
       icon="i-ph-lock"
       :ui="{ icon: { trailing: { pointer: '' } } }"
+      @keyup="updateModelValue"
     >
       <template #trailing>
-        <span class="cursor-pointer" @click="togglePassword">
-          <UIcon v-if="passwordType == 'password'" name="i-ph-eye" />
-          <UIcon v-else name="i-ph-eye-slash" />
+        <span
+          class="cursor-pointer"
+          @click="togglePassword"
+        >
+          <UIcon
+            v-if="passwordType == 'password'"
+            name="i-ph-eye"
+          />
+          <UIcon
+            v-else
+            name="i-ph-eye-slash"
+          />
         </span>
       </template>
     </UInput>

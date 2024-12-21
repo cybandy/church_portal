@@ -1,5 +1,3 @@
-
-
 export default defineEventHandler(async (event) => {
   const authorization = event.headers.get('Authorization')
   if (authorization) {
@@ -7,7 +5,6 @@ export default defineEventHandler(async (event) => {
     const d = isAuthenticated(event, token) as any
     if (d && !d.error) {
       event.context.user = d.data
-
     }
   }
 })

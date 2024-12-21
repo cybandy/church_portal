@@ -23,7 +23,6 @@ const queryParams = computed(() => {
   }
 })
 
-
 // list function
 const listHymnFunc = async (update = false) => {
   hymn_ind.value = 0
@@ -37,7 +36,8 @@ const listHymnFunc = async (update = false) => {
   if (hymns) {
     if (update) {
       hymnals.value = hymns as any
-    } else {
+    }
+    else {
       hymnals.value.push(...hymns as any)
     }
     count.value = Number(_count)
@@ -57,7 +57,6 @@ const loadMore = computed(() => {
   return !loading.value && queryParams.value.offset < count.value
 })
 
-
 // scrolling
 const scrollDown = async () => {
   if (!q.value) {
@@ -66,12 +65,9 @@ const scrollDown = async () => {
   }
 }
 
-
-
 await listHymnFunc()
 
-
-//seo
+// seo
 defineOgImageComponent('Nuxt', {
   title: 'PraisePortal',
   description: 'Enter into his gates with thanksgiving, and into his courts with praise: be thankful unto him, and bless his name. Psalm 100:4'
@@ -80,7 +76,13 @@ defineOgImageComponent('Nuxt', {
 
 <template>
   <UContainer class="flex items-center justify-center pt-[30px] h-[calc(100vh-66px)] md:h-[calc(100vh-80px)] overflow-y-hidden">
-    <HymnListing @scroll="scrollDown" v-model:q="q" v-model:hymnals="hymnals" :count="count" :load-more="loadMore" />
+    <HymnListing
+      v-model:q="q"
+      v-model:hymnals="hymnals"
+      :count="count"
+      :load-more="loadMore"
+      @scroll="scrollDown"
+    />
   </UContainer>
 </template>
 

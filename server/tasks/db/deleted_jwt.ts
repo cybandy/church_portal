@@ -1,18 +1,18 @@
-import { eq } from "drizzle-orm"
+import { eq } from 'drizzle-orm'
+
 export default defineTask({
   meta: {
-    name: "db:deleted_jwt",
-    description: "Delete all expired blacklisted jwt's"
+    name: 'db:deleted_jwt',
+    description: 'Delete all expired blacklisted jwt\'s'
   },
   async run({ payload, context }) {
-
     const db = useDrizzle()
     const date = new Date()
     try {
       await db.delete(DBTables.blackListedTokens)
         .where(eq(DBTables.blackListedTokens.expiration, date))
 
-      console.log("scheduled tasks: clearing blacklist jwt's")
+      console.log('scheduled tasks: clearing blacklist jwt\'s')
 
       return {
         result: {
@@ -20,7 +20,8 @@ export default defineTask({
           msg: 'success'
         }
       }
-    } catch (error) {
+    }
+    catch (error) {
       console.log(error)
       return {
         result: {
