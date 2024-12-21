@@ -138,13 +138,13 @@ export default defineNuxtConfig({
     headers: {
       contentSecurityPolicy: {
         'img-src': [
-          '`self`', 'https://flagcdn.com',
+          "'self'", 'https://flagcdn.com', 'data:', 'https'
         ],
-        'object-src': ['https://flagcdn.com', '`self`',]
+        'object-src': ['https://flagcdn.com', "'self'",]
       },
       crossOriginResourcePolicy: 'cross-origin',
       permissionsPolicy: {
-        fullscreen: ['`self`']
+        fullscreen: ["'self'"]
       }
     }
   },
