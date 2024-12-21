@@ -84,9 +84,9 @@ useScreenOrientation()
 <template>
   <UContainer
     ref="containerEl"
-    :ui="{ constrained: 'max-w-full' }"
+    :ui="{ constrained: 'max-w-full h-full', base: 'bg-white dark:bg-gray-950 text-black dark:text-white font-bold' }"
   >
-    <h1 class="text-xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-semibold w-full text-center py-5 md:py-10">
+    <h1 class="text-xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black w-full text-center py-5 md:py-10">
       {{ hymns[0]?.number }} - {{ hymns[0]?.title }}
     </h1>
     <div class="w-full h-full">
